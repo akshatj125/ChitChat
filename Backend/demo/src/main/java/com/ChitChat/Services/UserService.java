@@ -1,0 +1,11 @@
+package com.ChitChat.Services;
+
+import com.ChitChat.Entity.User;
+import org.springframework.stereotype.Service;
+
+@Service
+public interface UserService {
+    User save(User user);
+
+    
+}
