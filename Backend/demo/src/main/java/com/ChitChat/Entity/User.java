@@ -1,7 +1,9 @@
 package com.ChitChat.Entity;
 
+import java.time.LocalDateTime;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "myuser")
@@ -18,4 +20,11 @@ public class User {
 
     @Column(name = "email")
     private String email;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime localDate;
+
+    @Column(name = "is_active")
+    private boolean qeActive;
 }
