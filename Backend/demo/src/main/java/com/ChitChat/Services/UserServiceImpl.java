@@ -2,7 +2,9 @@ package com.ChitChat.Services;
 
 import com.ChitChat.Entity.User;
 import com.ChitChat.UserRepository;
+import com.ChitChat.exceptions.AppException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User save(User theUser) {
+        Optional<User> user = userRepository.findByUsername(theUser.getUsername());
+        if(user.isPresent()){
+            throw new AppException("User already exists", HttpStatus.CONFLICT);
+        }
         return userRepository.save(theUser);
     }
 
@@ -41,5 +47,10 @@ public class UserServiceImpl implements UserService{
         }
 
         return theUser;
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
     }
 }
