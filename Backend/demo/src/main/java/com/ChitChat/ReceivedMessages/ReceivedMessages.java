@@ -11,11 +11,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "Received_messages")
 @Data
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@ToString
-//@Getter
-//@Setter
 public class ReceivedMessages {
 
     @Id

@@ -56,13 +56,13 @@ public class UserController {
 
     @PutMapping("/{userId}/conversation/{conversationId}")
     @Transactional
-    public ResponseEntity<Boolean> addUserToConversation (@PathVariable int userId, @PathVariable int conversationId) {
+    public ResponseEntity<UserDetailDto> addUserToConversation (@PathVariable int userId, @PathVariable int conversationId) {
         Users user = userService.addUserToConversation(userId, conversationId);
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         UserDetailDto userDTO = UserDetailMapper.mapToUserDto(user); // Assuming you have a UserDTO and UserMapper
-        return ResponseEntity.ok(true);
+//        return ResponseEntity.ok(true);
+        return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
-
 }

@@ -45,6 +45,7 @@ public class Users {
     @Column(name = "status") // Maps this field to the "status" column in the database table.
     private boolean status;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "participants", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Conversations> conversations;
 

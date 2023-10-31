@@ -17,6 +17,5 @@ public class UserDetailDto {
     private String email;
     private String profilepicture;
     private LocalDateTime created_at;
-    private List<Conversations> conversations;
 
 }

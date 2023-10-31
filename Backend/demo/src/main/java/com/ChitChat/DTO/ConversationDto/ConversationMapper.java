@@ -8,7 +8,8 @@ public class ConversationMapper {
 
     public static ConversationDto mapToConversationDto(Conversations conversation) {
         return new ConversationDto(
-                conversation.getName()
+                conversation.getName(),
+                conversation.getParticipants()
         );
     }
 
