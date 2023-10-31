@@ -1,10 +1,10 @@
-package com.ChitChat.Services;
+package com.ChitChat.Users;
 
-import com.ChitChat.Entity.Conversations;
-import com.ChitChat.Entity.Users;
+import com.ChitChat.Conversations.Conversations;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface UserService {
@@ -12,9 +12,9 @@ public interface UserService {
 
     List<Users> findAll();
 
-//    Users findById(int theId);
+    Optional<Users> findById(int theId);
 
-    Users findByUsername(String username);
+    Optional<Users> findByUsername(String username);
 
-    Conversations addUserToGroup(int userId, int groupId);
+    Users addUserToConversation(int userId, int conversationId);
 }

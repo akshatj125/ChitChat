@@ -1,13 +1,16 @@
-package com.ChitChat.Controllers;
+package com.ChitChat.Users;
 
 import com.ChitChat.Config.UserAuthProvider;
-import com.ChitChat.DTO.ConversationDto;
-import com.ChitChat.DTO.UserDetailDto;
-import com.ChitChat.Entity.Conversations;
-import com.ChitChat.Entity.Users;
-import com.ChitChat.Services.UserService;
+import com.ChitChat.DTO.LoginDto.LoginDto;
+import com.ChitChat.DTO.LoginDto.LoginMapper;
+import com.ChitChat.DTO.SignupDto.SignupDto;
+import com.ChitChat.DTO.SignupDto.SignupMapper;
+import com.ChitChat.DTO.UserDetailDto.UserDetailDto;
+import com.ChitChat.DTO.UserDetailDto.UserDetailMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,43 +24,45 @@ public class UserController {
     private final UserAuthProvider userAuthProvider; // Autowired UserAuthProvider for user authentication.
 
     @PostMapping("/adduser")
-//    public ResponseEntity<String> addUser(@RequestBody Users user) {
-//        // Handles a POST request to add a new user.
-//        Users users = userService.save(user); // Save the user using the UserService.
-//        String token = userAuthProvider.createToken(users.getUsername()); // Create an authentication token.
-//        return ResponseEntity.ok(token); // Return the authentication token as a response.
-//    }
+    @Transactional
+    public ResponseEntity<SignupDto> addUser(@RequestBody Users user){ // Handles a POST request to add a new user.
+        Users addedUser = userService.save(user);
 
-    public Users addUser(@RequestBody Users user){
-        // Handles a POST request to add a new user.
-        return userService.save(user); // Save the user using the UserService.
-    }
-
-    @PutMapping("/users")
-    public Users updateUser(@RequestBody Users theUser) {
-        // Handles a PUT request to update a user.
-        return userService.save(theUser); // Save the updated user using the UserService.
+        return new ResponseEntity<>(SignupMapper.mapToUserDto(addedUser), HttpStatus.CREATED);// Save the user using the UserService.
     }
 
     @GetMapping("/users")
-    public List<Users> showUser(Users user) {
+    public ResponseEntity<List<LoginDto>> showUser() {
         // Handles a GET request to fetch a list of users.
-        return userService.findAll(); // Retrieve and return a list of all users.
+        List<Users> users = userService.findAll();
+        // Retrieve and return a list of all users.
+
+        return new ResponseEntity<>(LoginMapper.mapToUserDto(users), HttpStatus.OK);
     }
 
-//    @GetMapping("/users/{theId}")
-//    public Users getUser(@PathVariable int theId) {
-//        // Handles a GET request to fetch a specific user by their ID.
-//        Users user = userService.findById(theId); // Retrieve the user with the specified ID.
-//        if (user == null) {
-//            throw new RuntimeException("User not found"); // Throw an exception if the user is not found.
-//        }
-//        return user; // Return the found user.
-//    }
+    @GetMapping("/{userId}")
+    public ResponseEntity<LoginDto> getUserById(@PathVariable int userId) {
+    // Handles a GET request to fetch a single user.
+        Users user = userService.findById(userId).get();
+        return new ResponseEntity<>(LoginMapper.mapToUserDto(user), HttpStatus.OK);
+    }
 
-//    @PutMapping("/{userId}/group/{groupId}")
-//    public ResponseEntity<ConversationDto> addUserToGroup(@PathVariable int userId, @PathVariable int groupId) {
-//        Groups group = userService.addUserToGroup(userId, groupId);
-//        return ResponseEntity.ok(Conversations.c(group));
-//    }
+    @GetMapping("/alldetail/{userId}")
+    public ResponseEntity<UserDetailDto> getUserrById(@PathVariable int userId) {
+        // Handles a GET request to fetch a single user.
+        Users user = userService.findById(userId).get();
+        return new ResponseEntity<>(UserDetailMapper.mapToUserDto(user), HttpStatus.OK);
+    }
+
+    @PutMapping("/{userId}/conversation/{conversationId}")
+    @Transactional
+    public ResponseEntity<Boolean> addUserToConversation (@PathVariable int userId, @PathVariable int conversationId) {
+        Users user = userService.addUserToConversation(userId, conversationId);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        UserDetailDto userDTO = UserDetailMapper.mapToUserDto(user); // Assuming you have a UserDTO and UserMapper
+        return ResponseEntity.ok(true);
+    }
+
 }

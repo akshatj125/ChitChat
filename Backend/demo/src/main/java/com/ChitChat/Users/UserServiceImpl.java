@@ -1,28 +1,22 @@
-package com.ChitChat.Services;
+package com.ChitChat.Users;
 
-import com.ChitChat.Entity.Conversations;
-import com.ChitChat.Entity.Users;
-import com.ChitChat.Repository.ConversationRepository;
-import com.ChitChat.Repository.UserRepository;
-import com.ChitChat.exceptions.AppException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import com.ChitChat.Conversations.Conversations;
+import com.ChitChat.Conversations.ConversationRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ConversationRepository conversationRepository;
+    private final UserRepository userRepository;
+    private final ConversationRepository conversationRepository;
 
     @Override
-    public Users save(Users theUser) {
-        return userRepository.save(theUser);
+    public Users save(Users user) {
+        return userRepository.save(user);
     }
 
     @Override
@@ -31,27 +25,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Users findByUsername(String username) {
-        return null;
+    public Optional<Users> findById(int theId) {
+        return userRepository.findById(theId);
     }
 
     @Override
-    public Conversations addUserToGroup(int userId, int groupId) {
-
-        Users user = userRepository.findById(userId).orElseThrow(() -> new AppException("User not found", HttpStatus.NOT_FOUND));
-        Conversations conversations = conversationRepository.findById(groupId).orElseThrow(() -> new AppException("Group not found", HttpStatus.NOT_FOUND));
-
-//        Set<Users> users = group.getGroupUsers();
-//        users.add(user);
-//        group.setGroupUsers(users);
-//        return groupRepository.save(group);
-
-        List<Conversations> groups = user.getConversations();
-        groups.add(conversations);
-        user.setConversations(groups);
-//        System.out.println(userRepository.save(user));
-//        user=userRepository.findById(userId).get();
-//        System.out.println(user);
-        return conversationRepository.findById(conversations.getId()).get();
+    public Optional<Users> findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
+
+    @Override
+    public Users addUserToConversation(int userId, int conversationId) {
+        System.out.println("hello");
+        Users user = userRepository.findById(userId).get();
+        Conversations conversation = conversationRepository.findById(conversationId).get();
+        user.getConversations().add(conversation);
+        userRepository.save(user);
+        return user;
+    }
+
+
 }
