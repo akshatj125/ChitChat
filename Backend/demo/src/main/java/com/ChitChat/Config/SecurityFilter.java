@@ -25,9 +25,9 @@ public class SecurityFilter {
                 .addFilterBefore(new JwtAuthFilter(userAuthProvider), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(
                         (request) -> {
-                            request.requestMatchers(HttpMethod.GET, "/users/users", "/viewConversations", "/getMessage", "/received", "/user/conversation", "/users/{userId}", "/users/alldetail/{userId}", "/viewReceivedMessage").permitAll()
-                                    .requestMatchers(HttpMethod.POST, "/users/adduser", "/conversations", "/saveMessage", "/receivedMessage", "/saveReceivedMessage").permitAll()
-                                    .requestMatchers(HttpMethod.PUT, "/users/{userId}", "/users/{userId}/conversation/{conversationId}").permitAll()
+                            request.requestMatchers(HttpMethod.GET, "/viewConversations", "/getMessage", "/received", "/user/conversation", "/users/alldetail/{userId}", "/viewReceivedMessage").permitAll()
+                                    .requestMatchers(HttpMethod.POST, "/users/signup","/users/login", "/conversations", "/saveMessage", "/receivedMessage", "/saveReceivedMessage").permitAll()
+                                    .requestMatchers(HttpMethod.PUT, "/users/{userId}/conversation/{conversationId}").permitAll()
                                     .anyRequest().authenticated();
                         }
                 );
