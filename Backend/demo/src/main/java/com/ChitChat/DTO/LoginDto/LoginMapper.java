@@ -8,12 +8,12 @@ public class LoginMapper {
 
     public static LoginDto mapToUserDto(Users user) {
         return new LoginDto(
-                user.getEmail(),
+                user.getUsername(),
                 user.getPassword()
         );
     }
 
-    public static List<LoginDto> mapToUserDto(List<Users> users){
+    public static List<LoginDto> mapToUserDto(List<Users> users) {
         return users.stream().map(LoginMapper::mapToUserDto).toList();
     }
 }

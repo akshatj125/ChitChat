@@ -2,6 +2,9 @@ package com.ChitChat.Users;
 
 import com.ChitChat.Conversations.Conversations;
 import com.ChitChat.Conversations.ConversationRepository;
+import com.ChitChat.DTO.ConversationDto.ConversationDto;
+import com.ChitChat.DTO.UserDetailDto.UserDetailDto;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

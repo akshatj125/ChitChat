@@ -46,6 +46,10 @@ public class UserAuthProvider {
                 .sign(algorithm);
     }
 
+    public boolean validateUser(Users user, String username) {
+        return user != null && user.getUsername().equals(username);
+    }
+
     public Authentication validateToken(String token) {
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
@@ -54,7 +58,7 @@ public class UserAuthProvider {
 
         DecodedJWT decoded = verifier.verify(token);
 
-        Optional<Users> user = userService.findByUsername(decoded.getIssuer());
+        Users user = userService.findByUsername(decoded.getIssuer()).get();
 
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
     }

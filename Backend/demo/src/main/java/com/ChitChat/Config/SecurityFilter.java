@@ -23,11 +23,11 @@ public class SecurityFilter {
         httpSecurity.cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(new JwtAuthFilter(userAuthProvider), BasicAuthenticationFilter.class)
+
                 .authorizeHttpRequests(
                         (request) -> {
-                            request.requestMatchers(HttpMethod.GET, "/viewConversations", "/getMessage", "/received", "/user/conversation", "/users/alldetail/{userId}", "/viewReceivedMessage").permitAll()
-                                    .requestMatchers(HttpMethod.POST, "/users/signup","/users/login", "/conversations", "/saveMessage", "/receivedMessage", "/saveReceivedMessage").permitAll()
-                                    .requestMatchers(HttpMethod.PUT, "/users/{userId}/conversation/{conversationId}").permitAll()
+                            request.requestMatchers(HttpMethod.GET, "/users/signup","/users/login").permitAll()
+                                    .requestMatchers(HttpMethod.POST, "/users/signup","/users/login").permitAll()
                                     .anyRequest().authenticated();
                         }
                 );

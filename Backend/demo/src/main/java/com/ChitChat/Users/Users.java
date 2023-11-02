@@ -24,7 +24,7 @@ public class Users {
     // Specifies how the primary key value is generated (identity strategy for auto-increment).
     private int id;
 
-    @Column(name = "username") // Maps this field to the "username" column in the database table.
+    @Column(name = "username", unique = true) // Maps this field to the "username" column in the database table.
     private String username;
 
     @Column(name = "email") // Maps this field to the "email" column in the database table.
@@ -33,7 +33,7 @@ public class Users {
     @Column(name = "profilepicture") // Maps this field to the "profilepicture" column in the
     private String profilepicture;
 
-    @Column(name = "password") // Maps this field to the "password" column in the database table.
+    @Column(name = "password", unique = true) // Maps this field to the "password" column in the database table.
     private String password;
 
     @CreationTimestamp
@@ -61,8 +61,8 @@ public class Users {
                 ", profilepicture='" + profilepicture + '\'' +
                 ", created_at=" + created_at +
                 ", status=" + status +
-                ", conversations=" + conversations +
-                ", receivedMessages=" + receivedMessages +
+//                ", conversations=" + conversations +
+//                ", receivedMessages=" + receivedMessages +
                 '}';
     }
 }

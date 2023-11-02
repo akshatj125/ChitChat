@@ -10,8 +10,7 @@ public class SignupMapper {
         return new SignupDto(
                 user.getUsername(),
                 user.getEmail(),
-                user.getPassword(),
-                user.getProfilepicture()
+                user.getPassword()
         );
     }
 

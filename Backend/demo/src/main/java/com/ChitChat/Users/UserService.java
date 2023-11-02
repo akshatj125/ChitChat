@@ -1,6 +1,8 @@
 package com.ChitChat.Users;
 
 import com.ChitChat.Conversations.Conversations;
+import com.ChitChat.DTO.ConversationDto.ConversationDto;
+import com.ChitChat.DTO.UserDetailDto.UserDetailDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
