@@ -1,0 +1,16 @@
+.footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+a{
+    padding-right: 40px;
+    text-decoration: none;
+    color: #3c6e71;
+}
+
+.leftElements{
+    padding-left: 40px;
+}

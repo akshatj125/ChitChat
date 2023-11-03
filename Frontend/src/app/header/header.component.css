@@ -1,0 +1,21 @@
+.header-bg {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+.icon{
+  width: 2rem;
+  height: 2rem;
+}
+
+.btn {
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+}
+
