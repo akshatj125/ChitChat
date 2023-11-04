@@ -20,7 +20,8 @@ public class SecurityFilter {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 
-        httpSecurity.cors(withDefaults())
+        httpSecurity
+//                .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(new JwtAuthFilter(userAuthProvider), BasicAuthenticationFilter.class)
 

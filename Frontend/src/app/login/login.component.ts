@@ -1,20 +1,13 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { NgForm, NgModel } from '@angular/forms';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class SignupComponent {
+export class LoginComponent {
+
   userdata = {
     username: '',
     email: '',
@@ -22,12 +15,12 @@ export class SignupComponent {
   };
 
   constructor(private http: HttpClient) {}
-  signup() {
+  login() {
     const headers=new HttpHeaders({
       'Content-Type':'application/json'
     })    
     let response = this.http.post(
-      'http://localhost:8080/users/signup',
+      'http://localhost:8080/users/login',
       this.userdata,
       {headers,responseType:'text'}
     );
@@ -36,4 +29,5 @@ export class SignupComponent {
       localStorage.setItem('token', data);
     });
   }
+  
 }
