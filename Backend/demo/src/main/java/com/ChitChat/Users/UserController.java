@@ -48,7 +48,7 @@ public class UserController {
         System.out.println("hello");
         Optional<Users> user = userService.findByUsername(loginDto.getUsername());
 
-        if (user.isEmpty() || !userAuthProvider.validateUser(user.get(), loginDto.getUsername())) {
+        if (user.isEmpty() || !userAuthProvider.validateUser(user.get(), loginDto.getUsername(), loginDto.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
 
@@ -69,7 +69,7 @@ public class UserController {
         return new ResponseEntity<>(UserDetailMapper.mapToUserDto(user), HttpStatus.OK);
     }
 
-    @PutMapping("{userId}/conversation/{conversationId}")
+    @PostMapping("{userId}/conversation/{conversationId}")
     @Transactional
     public ResponseEntity<UserDetailDto> addUserToConversation (@PathVariable int userId, @PathVariable int conversationId)
     {
@@ -80,4 +80,5 @@ public class UserController {
         UserDetailDto userDTO = UserDetailMapper.mapToUserDto(user);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
+
 }

@@ -1,10 +1,16 @@
 package com.ChitChat.Messages;
 
+import com.ChitChat.Conversations.Conversations;
+import com.ChitChat.DTO.ConversationDto.ConversationDto;
+import com.ChitChat.DTO.ConversationDto.ConversationMapper;
+import com.ChitChat.DTO.MessageDto.MessageDto;
+import com.ChitChat.DTO.MessageDto.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +32,17 @@ public class MessageController {
     @GetMapping("/getMessage")
     public List<Messages> findAllMessage() {
         return messageService.findAllMessage();
+    }
+
+    @PostMapping("/message/{messageId}/conversation/{conversationId}")
+    @Transactional
+    public ResponseEntity<MessageDto> addConversationToMessage(@PathVariable int conversationId, @PathVariable int messageId)
+    {
+        Messages messages = messageService.addConversationToMessage(messageId, conversationId);
+        if(messages == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        MessageDto messageDto = MessageMapper.mapToMessageDto(messages);
+        return new ResponseEntity<>(messageDto, HttpStatus.OK);
     }
 }

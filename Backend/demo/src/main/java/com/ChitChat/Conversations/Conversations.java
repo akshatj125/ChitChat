@@ -2,10 +2,10 @@ package com.ChitChat.Conversations;
 
 import com.ChitChat.Messages.Messages;
 import com.ChitChat.Users.Users;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,18 +25,26 @@ public class Conversations {
     @Column(name = "status")
     private boolean status;
 
-    @OneToMany(mappedBy = "conversation_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Messages> messages;
 
     @CreationTimestamp
-    @Column(name = "timestamp")
+    @Column(name = "timestamp", nullable = false, updatable = false)
     private LocalDateTime timestamp;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "conversations_users",
-            joinColumns = @JoinColumn(name = "conversation_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<Users> participants;
+    @ManyToMany(mappedBy = "conversations")
+    @JsonIgnore
+    private List<Users> users;
+
+    @Override
+    public String toString() {
+        return "Conversations{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", messages=" + messages +
+                ", timestamp=" + timestamp +
+                '}';
+    }
 }

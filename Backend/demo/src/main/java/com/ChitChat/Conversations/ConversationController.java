@@ -17,16 +17,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConversationController {
 
-    private UserRepository userRepository;
+//    private final ConversationRepository conversationRepository;
 
-    private ConversationRepository conversationRepository;
-
-    private ConversationService conversationService;
-
-    @Autowired
-    public ConversationController(ConversationService theConversationService) {
-        this.conversationService = theConversationService;
-    }
+    private final ConversationService conversationService;
 
     @PostMapping("/conversations")
     @Transactional
@@ -39,5 +32,28 @@ public class ConversationController {
         List<Conversations> conversations = conversationService.findAllConversation();
 
         return new ResponseEntity<>(ConversationMapper.mapToConversationDto(conversations), HttpStatus.OK);
+    }
+
+    @PostMapping("/conversations/{conversationId}/user/{userId}")
+    @Transactional
+    public ResponseEntity<ConversationDto> addConversationToUsers(@PathVariable int userId, @PathVariable int conversationId){
+        Conversations conversation = conversationService.addConversationToUser(userId, conversationId);
+        if (conversation == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        ConversationDto conversationDto = ConversationMapper.mapToConversationDto(conversation);
+        return new ResponseEntity<>(conversationDto, HttpStatus.OK);
+    }
+
+    @PostMapping("/conversations/{conversationId}/messages/{messageId}")
+    @Transactional
+    public ResponseEntity<ConversationDto> addMessageToConversation(@PathVariable int conversationId, @PathVariable int messageId)
+    {
+        Conversations conversation = conversationService.addMessageToConversation(messageId, conversationId);
+        if(conversation == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        ConversationDto conversationDto = ConversationMapper.mapToConversationDto(conversation);
+        return new ResponseEntity<>(conversationDto, HttpStatus.OK);
     }
 }

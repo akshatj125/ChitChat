@@ -9,4 +9,6 @@ public interface MessageService {
     Messages saveMessage(Messages message);
 
     public List<Messages> findAllMessage();
+
+    Messages addConversationToMessage(int messageId, int conversationId);
 }

@@ -11,4 +11,8 @@ public interface ConversationService {
 
     List<Conversations> findAllConversation();
 
+    Conversations addConversationToUser(int userId, int conversationId);
+
+    Conversations addMessageToConversation(int messageId, int conversationId);
+
 }

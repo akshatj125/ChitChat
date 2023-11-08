@@ -46,8 +46,8 @@ public class UserAuthProvider {
                 .sign(algorithm);
     }
 
-    public boolean validateUser(Users user, String username) {
-        return user != null && user.getUsername().equals(username);
+    public boolean validateUser(Users user, String username, String password) {
+        return user != null && user.getUsername().equals(username) && user.getPassword().equals(password);
     }
 
     public Authentication validateToken(String token) {
@@ -58,7 +58,7 @@ public class UserAuthProvider {
 
         DecodedJWT decoded = verifier.verify(token);
 
-        Users user = userService.findByUsername(decoded.getIssuer()).get();
+        Users user = userService.findByUsername(decoded.getIssuer()).orElseThrow();
 
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
     }

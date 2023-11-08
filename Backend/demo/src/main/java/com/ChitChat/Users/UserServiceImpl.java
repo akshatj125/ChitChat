@@ -4,8 +4,10 @@ import com.ChitChat.Conversations.Conversations;
 import com.ChitChat.Conversations.ConversationRepository;
 import com.ChitChat.DTO.ConversationDto.ConversationDto;
 import com.ChitChat.DTO.UserDetailDto.UserDetailDto;
+import com.ChitChat.exceptions.AppException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
     private final UserRepository userRepository;
     private final ConversationRepository conversationRepository;
 
@@ -39,9 +42,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Users addUserToConversation(int userId, int conversationId) {
-        System.out.println("hello");
-        Users user = userRepository.findById(userId).get();
-        Conversations conversation = conversationRepository.findById(conversationId).get();
+//        System.out.println("hello");
+        Users user = userRepository.findById(userId).orElseThrow(()->new AppException("User not found", HttpStatus.NOT_FOUND));
+        Conversations conversation = conversationRepository.findById(conversationId).orElseThrow(()->new AppException("Conversation not found", HttpStatus.NOT_FOUND));
         user.getConversations().add(conversation);
         userRepository.save(user);
         return user;

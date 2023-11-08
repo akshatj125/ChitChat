@@ -2,12 +2,8 @@ package com.ChitChat.Users;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.ChitChat.Conversations.Conversations;
-import com.ChitChat.ReceivedMessages.ReceivedMessages;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -33,7 +29,7 @@ public class Users {
     @Column(name = "profilepicture") // Maps this field to the "profilepicture" column in the
     private String profilepicture;
 
-    @Column(name = "password", unique = true) // Maps this field to the "password" column in the database table.
+    @Column(name = "password") // Maps this field to the "password" column in the database table.
     private String password;
 
     @CreationTimestamp
@@ -45,12 +41,11 @@ public class Users {
     @Column(name = "status") // Maps this field to the "status" column in the database table.
     private boolean status;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "participants", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany()
+    @JoinTable(name = "user_conversations",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "conversation_id"))
     private List<Conversations> conversations;
-
-    @OneToMany(mappedBy = "receiver")
-    private List<ReceivedMessages> receivedMessages;
 
     @Override
     public String toString() {
@@ -59,10 +54,9 @@ public class Users {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", profilepicture='" + profilepicture + '\'' +
+                ", password='" + password + '\'' +
                 ", created_at=" + created_at +
                 ", status=" + status +
-//                ", conversations=" + conversations +
-//                ", receivedMessages=" + receivedMessages +
                 '}';
     }
 }
