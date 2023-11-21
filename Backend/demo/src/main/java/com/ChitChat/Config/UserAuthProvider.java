@@ -60,7 +60,7 @@ public class UserAuthProvider {
 
         Users user = userService.findByUsername(decoded.getIssuer()).orElseThrow();
 
-        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        return new UsernamePasswordAuthenticationToken(user.getUsername(), null, Collections.emptyList());
     }
 }
 

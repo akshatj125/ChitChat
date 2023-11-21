@@ -1,0 +1,18 @@
+button{
+    padding: 10px 20px;
+    background-color: #1a58dd;
+    color: #fff;
+    margin-bottom: 8px;
+    border: solid 2px #999;
+    border-radius: 8px;
+    cursor: not-allowed;
+    font-size: medium;
+    font-weight: bold;
+}
+
+
+.invalidMessage{
+    text-align: left;
+    color: red;
+    font-size: small;
+  }

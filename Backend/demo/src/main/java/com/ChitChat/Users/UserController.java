@@ -6,10 +6,17 @@ import com.ChitChat.DTO.LoginDto.LoginMapper;
 import com.ChitChat.DTO.SignupDto.SignupDto;
 import com.ChitChat.DTO.UserDetailDto.UserDetailDto;
 import com.ChitChat.DTO.UserDetailDto.UserDetailMapper;
+import com.ChitChat.exceptions.AppException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,9 +70,10 @@ public class UserController {
     }
 
 
-    @GetMapping("/profile/{userId}")
-    public ResponseEntity<UserDetailDto> getUserById(@PathVariable int userId) {
-        Users user = userService.findById(userId).get();
+    @GetMapping("/profile")
+    public ResponseEntity<UserDetailDto> getUserById(Authentication authentication) {
+        String username =(String) authentication.getPrincipal();
+        Users user = userService.findByUsername(username).get();
         return new ResponseEntity<>(UserDetailMapper.mapToUserDto(user), HttpStatus.OK);
     }
 
@@ -80,5 +88,6 @@ public class UserController {
         UserDetailDto userDTO = UserDetailMapper.mapToUserDto(user);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
+
 
 }

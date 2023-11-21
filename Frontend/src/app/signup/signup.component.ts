@@ -21,7 +21,10 @@ export class SignupComponent {
     password: '',
   };
 
-  constructor(private http: HttpClient) {}
+  usernameExists= false
+
+
+  constructor(private router : Router ,private http: HttpClient) {}
   signup() {
     const headers=new HttpHeaders({
       'Content-Type':'application/json'
@@ -35,5 +38,7 @@ export class SignupComponent {
       console.log(data);
       localStorage.setItem('token', data);
     });
+
+    this.router.navigate(['/home']);
   }
 }

@@ -24,7 +24,6 @@ public class SecurityFilter {
 //                .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(new JwtAuthFilter(userAuthProvider), BasicAuthenticationFilter.class)
-
                 .authorizeHttpRequests(
                         (request) -> {
                             request.requestMatchers(HttpMethod.GET, "/users/signup","/users/login").permitAll()

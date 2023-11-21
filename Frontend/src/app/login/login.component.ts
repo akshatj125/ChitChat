@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent {
     password: '',
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private router : Router, private http: HttpClient) {}
   login() {
     const headers=new HttpHeaders({
       'Content-Type':'application/json'
@@ -27,7 +28,20 @@ export class LoginComponent {
     response.subscribe((data) => {
       console.log(data);
       localStorage.setItem('token', data);
-    });
-  }
+
+      var url=localStorage.getItem("redirectUrl")
+        if(url==null)
+        {
+          url="/home"
+        }
+        localStorage.removeItem("redirectUrl")
+        this.router.navigate([url])
+      
+      },
+      error=>{
+        alert("Invalid credentials")
+      }
+    )
+    }
   
 }

@@ -19,4 +19,6 @@ public interface UserService {
     Optional<Users> findByUsername(String username);
 
     Users addUserToConversation(int userId, int conversationId);
+
+    void removeUser(int userId);
 }

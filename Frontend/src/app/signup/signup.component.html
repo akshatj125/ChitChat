@@ -13,81 +13,96 @@
                 Sign up
               </p>
 
-              <form class="mx-1 mx-md-4">
-                <div class="d-flex flex-row align-items-center mb-4">
-                  <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                  <div class="form-outline flex-fill mb-0">
-                    <label class="form-label" for="username">Username</label>
-                    <input
-                      type="text"
-                      [(ngModel)]="userdata.username"
-                      [ngModelOptions]="{ standalone: true }"
-                      class="form-control"
-                      id="name"
-                      placeholder="Enter Username"
-                    />
-                  </div>
+              <form #signupForm="ngForm">
+                <label
+                  class="form-label fs-6 fw-bold text-black-50"
+                  for="username"
+                  >Username</label
+                >
+                <input
+                  type="text"
+                  placeholder="Username"
+                  required
+                  [(ngModel)]="userdata.username"
+                  #username="ngModel"
+                  [class.is-invalid]="username.invalid && username.touched"
+                  name="username"
+                  class="form-control form-control-lg col-sm-12 rounded-3 border border-black border-1"
+                />
+                <br />
+
+                <div
+                  *ngIf="username.invalid && username.touched"
+                  class="invalidMessage"
+                >
+                  Username is required
                 </div>
 
-                <div class="d-flex flex-row align-items-center mb-4">
-                  <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                  <div class="form-outline flex-fill mb-0">
-                    <label class="form-label" for="form3Example3c">Email</label>
-                    <input
-                      type="text"
-                      [(ngModel)]="userdata.email"
-                      [ngModelOptions]="{ standalone: true }"
-                      class="form-control"
-                      id="email"
-                      placeholder="Enter Email"
-                    />
-                  </div>
+                <div
+                  *ngIf="usernameExists && username.pristine"
+                  class="invalidMessage"
+                >
+                  Username is already taken
                 </div>
 
-                <div class="d-flex flex-row align-items-center mb-4">
-                  <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                  <div class="form-outline flex-fill mb-0">
-                    <label class="form-label" for="form3Example4c"
-                      >Password</label
-                    >
-                    <input
-                      type="password"
-                      [(ngModel)]="userdata.password"
-                      [ngModelOptions]="{ standalone: true }"
-                      class="form-control"
-                      id="password"
-                      placeholder="Enter Password"
-                    />
-                  </div>
+                <br />
+
+                <label class="form-label fs-6 fw-bold text-black-50" for="email"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  placeholder="Email"
+                  required
+                  [(ngModel)]="userdata.email"
+                  #email="ngModel"
+                  [class.is-invalid]="email.invalid && email.touched"
+                  name="email"
+                  class="form-control form-control-lg col-sm-12 rounded-3 border border-black border-1"
+                />
+                <br />
+                <div
+                  *ngIf="email.invalid && email.touched"
+                  class="invalidMessage"
+                >
+                  Email is required
                 </div>
 
-                <div class="form-check d-flex justify-content-center mb-5">
-                  <input
-                    class="form-check-input me-2"
-                    type="checkbox"
-                    value=""
-                    id="form2Example3c"
-                  />
-                  <label class="form-check-label" for="form2Example3">
-                    I agree all statements in <a href="#!">Terms of service</a>
-                  </label>
+                <br />
+
+                <label
+                  class="form-label fs-6 fw-bold text-black-50"
+                  for="password"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  placeholder="Password"
+                  required
+                  [(ngModel)]="userdata.password"
+                  #password="ngModel"
+                  [class.is-invalid]="password.invalid && password.touched"
+                  name="password"
+                  class="form-control form-control-lg col-sm-12 rounded-3 border border-black border-1"
+                />
+                <br />
+                <div
+                  *ngIf="password.invalid && password.touched"
+                  class="invalidMessage"
+                >
+                  Password is required
                 </div>
 
-                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                <br />
+                <div class="text-center">
                   <button
-                    type="button"
-                    class="btn btn-primary btn-lg"
+                    [disabled]="signupForm.form.invalid"
+                    [class.btnEnabled]="signupForm.form.valid"
                     (click)="signup()"
+                    type="submit"
                   >
-                    <a class = "register" href="/home">Register</a>
+                    Sign Up
                   </button>
-                </div>
-
-                <div class="d-flex justify-content-center mt-0">
-                  <p>
-                    Already a user?
-                    <a class = "login" href="/login" routerLinkActive="active"> Login </a>
-                  </p>
                 </div>
               </form>
             </div>
