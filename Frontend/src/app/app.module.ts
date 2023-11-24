@@ -11,7 +11,6 @@ import { FooterComponent } from './footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
-import { LogoutComponent } from './logout/logout.component';
 import { ChatwindowComponent } from './chatwindow/chatwindow.component';
 
 @NgModule({
@@ -23,7 +22,6 @@ import { ChatwindowComponent } from './chatwindow/chatwindow.component';
     HomeComponent,
     FooterComponent,
     LoginComponent,
-    LogoutComponent,
     ChatwindowComponent
   ],
   imports: [

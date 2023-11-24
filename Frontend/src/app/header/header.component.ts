@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,18 +8,15 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
-  // constructor(private router : Router){}
+  constructor(private router:Router){}
+  
+  logout(){
+    localStorage.clear()
+    this.router.navigate(['/login'])
+  }
 
+  isLoggedIn() : boolean{
+    return !!localStorage.getItem('token');
+  }
 
-  // loggedIn : boolean = false;
-  // loggedOut : boolean = true;
-
-  // logout(){
-  //   this.loggedIn = false;
-  //   this.loggedOut = true;
-    
-  //   sessionStorage.clear();
-    
-  //   this.router.navigateByUrl('/home');
-  // }
 }

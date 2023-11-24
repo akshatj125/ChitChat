@@ -33,9 +33,7 @@ public class Users {
     private String password;
 
     @CreationTimestamp
-    // JPA Hibernate annotation that automatically sets the current timestamp when the entity is created.
     @Column(name = "created_at", nullable = false, updatable = false)
-    // Maps this field to the "created_at" column in the database table.
     private LocalDateTime created_at;
 
     @Column(name = "status") // Maps this field to the "status" column in the database table.

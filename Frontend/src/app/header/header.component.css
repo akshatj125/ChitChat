@@ -1,5 +1,5 @@
 .header-bg {
-    height: 50px;
+    height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,3 +19,10 @@
   background: transparent;
 }
 
+.leftElements{
+  order: -1;
+}
+
+.rightElements{
+  display: flex;
+}
