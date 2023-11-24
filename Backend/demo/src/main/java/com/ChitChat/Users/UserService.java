@@ -3,6 +3,7 @@ package com.ChitChat.Users;
 import com.ChitChat.Conversations.Conversations;
 import com.ChitChat.DTO.ConversationDto.ConversationDto;
 import com.ChitChat.DTO.UserDetailDto.UserDetailDto;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,10 @@ public interface UserService {
 
     Optional<Users> findByUsername(String username);
 
-    Users addUserToConversation(int userId, int conversationId);
+    Users addUserToConversation(int conversationId, Authentication authentication);
 
     void removeUser(int userId);
+
+    List<Conversations> conversationsPerUser(Authentication authentication);
+
 }

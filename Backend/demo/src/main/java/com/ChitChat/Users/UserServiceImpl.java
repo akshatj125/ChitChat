@@ -8,6 +8,7 @@ import com.ChitChat.exceptions.AppException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,9 +42,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Users addUserToConversation(int userId, int conversationId) {
+    public Users addUserToConversation(int conversationId, Authentication authentication) {
 //        System.out.println("hello");
-        Users user = userRepository.findById(userId).orElseThrow(()->new AppException("User not found", HttpStatus.NOT_FOUND));
+        Users user = (Users) authentication.getPrincipal();
         Conversations conversation = conversationRepository.findById(conversationId).orElseThrow(()->new AppException("Conversation not found", HttpStatus.NOT_FOUND));
         user.getConversations().add(conversation);
         userRepository.save(user);
@@ -54,5 +55,12 @@ public class UserServiceImpl implements UserService {
     public void removeUser(int userId) {
         Users user = userRepository.findById(userId).orElseThrow(()->new AppException("Could not find user", HttpStatus.NOT_FOUND));
         userRepository.deleteById(userId);
+    }
+
+    @Override
+    public List<Conversations> conversationsPerUser(Authentication authentication) {
+        Users user = (Users) authentication.getPrincipal();
+        System.out.println(user.getConversations());
+        return user.getConversations();
     }
 }

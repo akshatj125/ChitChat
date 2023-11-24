@@ -1,22 +1,16 @@
 package com.ChitChat.Users;
 
 import com.ChitChat.Config.UserAuthProvider;
+import com.ChitChat.Conversations.Conversations;
 import com.ChitChat.DTO.LoginDto.LoginDto;
 import com.ChitChat.DTO.LoginDto.LoginMapper;
 import com.ChitChat.DTO.SignupDto.SignupDto;
 import com.ChitChat.DTO.UserDetailDto.UserDetailDto;
 import com.ChitChat.DTO.UserDetailDto.UserDetailMapper;
-import com.ChitChat.exceptions.AppException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +24,8 @@ import java.util.Optional;
 public class UserController {
 
 
-    private final UserService userService; // Autowired UserService for handling user-related operations.
-    private final UserAuthProvider userAuthProvider; // Autowired UserAuthProvider for user authentication.
+    private final UserService userService;
+    private final UserAuthProvider userAuthProvider;
     private final UserRepository userRepository;
 
     @PostMapping("/signup")
@@ -71,17 +65,17 @@ public class UserController {
 
 
     @GetMapping("/profile")
-    public ResponseEntity<UserDetailDto> getUserById(Authentication authentication) {
-        String username =(String) authentication.getPrincipal();
-        Users user = userService.findByUsername(username).get();
+    public ResponseEntity<UserDetailDto> getUserForProfile(Authentication authentication) {
+        Users user =(Users) authentication.getPrincipal();
         return new ResponseEntity<>(UserDetailMapper.mapToUserDto(user), HttpStatus.OK);
     }
 
-    @PostMapping("{userId}/conversation/{conversationId}")
+    @PostMapping("/conversation/{conversationId}")
     @Transactional
-    public ResponseEntity<UserDetailDto> addUserToConversation (@PathVariable int userId, @PathVariable int conversationId)
+    public ResponseEntity<UserDetailDto> addUserToConversation (@PathVariable int conversationId, Authentication authentication)
     {
-        Users user = userService.addUserToConversation(userId, conversationId);
+        Users user = (Users)authentication.getPrincipal();
+        Users user1 = userService.addUserToConversation(conversationId, authentication);
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -89,5 +83,14 @@ public class UserController {
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
-
+    @GetMapping("/conversations")
+    public ResponseEntity<List<Conversations>> getConversationsForCurrentUser(Authentication authentication) {
+        try {
+            List<Conversations> conversations = userService.conversationsPerUser(authentication);
+            return ResponseEntity.ok(conversations);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

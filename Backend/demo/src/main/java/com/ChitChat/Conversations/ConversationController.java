@@ -2,12 +2,15 @@ package com.ChitChat.Conversations;
 
 import com.ChitChat.DTO.ConversationDto.ConversationDto;
 import com.ChitChat.DTO.ConversationDto.ConversationMapper;
+import com.ChitChat.DTO.UserDetailDto.UserDetailMapper;
 import com.ChitChat.Users.UserRepository;
+import com.ChitChat.Users.UserService;
 import com.ChitChat.Users.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +24,8 @@ public class ConversationController {
 
     private final ConversationService conversationService;
 
+    private final UserService userService;
+
     @PostMapping("/conversations")
     @Transactional
     public Conversations saveConversation(@RequestBody Conversations conversations) {
@@ -28,10 +33,20 @@ public class ConversationController {
     }
 
     @GetMapping("/viewConversations")
-    public ResponseEntity<List<ConversationDto>> viewConversations(){
+    public ResponseEntity<List<ConversationDto>> viewConversations(Authentication authentication){
         List<Conversations> conversations = conversationService.findAllConversation();
-
+        System.out.println(authentication);
         return new ResponseEntity<>(ConversationMapper.mapToConversationDto(conversations), HttpStatus.OK);
+    }
+
+    @GetMapping("/conversations")
+    public ResponseEntity<List<Conversations>> conversationsOfUser(Authentication authentication){
+        Users user =(Users) authentication.getPrincipal();
+//        Users user = userService.findByUsername(username).get();
+
+        List<Conversations> conversation = conversationService.findAllConversation();
+
+        return new ResponseEntity<>(conversation, HttpStatus.OK);
     }
 
     @PostMapping("/conversations/{conversationId}/user/{userId}")

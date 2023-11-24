@@ -8,9 +8,11 @@ import com.ChitChat.exceptions.AppException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,4 +49,5 @@ public class ConversationServiceImpl implements ConversationService {
         conversationRepository.save(conversation);
         return conversation;
     }
+
 }

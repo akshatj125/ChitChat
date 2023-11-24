@@ -27,4 +27,13 @@ public class Messages {
     @CreationTimestamp
     @Column(name = "timestamp")
     private LocalDateTime timestamp;
+
+    @Override
+    public String toString() {
+        return "Messages{" +
+                "id=" + id +
+                ", message='" + message + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
+    }
 }

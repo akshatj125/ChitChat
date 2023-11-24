@@ -25,7 +25,7 @@ public class Conversations {
     @Column(name = "status")
     private boolean status;
 
-    @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "conversation", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Messages> messages;
 

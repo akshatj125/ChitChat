@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -7,4 +8,18 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+  // constructor(private router : Router){}
+
+
+  // loggedIn : boolean = false;
+  // loggedOut : boolean = true;
+
+  // logout(){
+  //   this.loggedIn = false;
+  //   this.loggedOut = true;
+    
+  //   sessionStorage.clear();
+    
+  //   this.router.navigateByUrl('/home');
+  // }
 }

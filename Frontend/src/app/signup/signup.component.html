@@ -25,7 +25,9 @@
                   required
                   [(ngModel)]="userdata.username"
                   #username="ngModel"
-                  [class.is-invalid]="username.invalid && username.touched"
+                  [class.is-invalid]="
+                    (username.invalid && username.touched) || usernameExists
+                  "
                   name="username"
                   class="form-control form-control-lg col-sm-12 rounded-3 border border-black border-1"
                 />

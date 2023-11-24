@@ -41,7 +41,7 @@ public class Users {
     @Column(name = "status") // Maps this field to the "status" column in the database table.
     private boolean status;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_conversations",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "conversation_id"))
