@@ -15,11 +15,16 @@ export class LoginComponent {
     password: '',
   };
 
+  onUsernameChange() {
+    this.userdata.username = this.userdata.username.toLowerCase();
+  }
+
+
   constructor(private router : Router, private http: HttpClient) {}
   login() {
     const headers=new HttpHeaders({
       'Content-Type':'application/json'
-    })    
+    })   
     let response = this.http.post(
       'http://localhost:8080/users/login',
       this.userdata,
@@ -35,7 +40,7 @@ export class LoginComponent {
           url="/home"
         }
         localStorage.removeItem("redirectUrl")
-        this.router.navigate([url])
+        this.router.navigate(['/chat']);
       
       },
       error=>{

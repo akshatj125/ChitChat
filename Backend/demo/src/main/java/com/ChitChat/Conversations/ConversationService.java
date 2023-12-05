@@ -1,5 +1,6 @@
 package com.ChitChat.Conversations;
 
+import com.ChitChat.Messages.Messages;
 import com.ChitChat.Users.Users;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,4 @@ public interface ConversationService {
     Conversations addConversationToUser(int userId, int conversationId);
 
     Conversations addMessageToConversation(int messageId, int conversationId);
-
-//    List<Conversations> findConversationByUserid(Authentication authentication);
 }

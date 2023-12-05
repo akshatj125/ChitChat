@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.ChitChat.Conversations.Conversations;
+import com.ChitChat.Messages.Messages;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,6 +24,12 @@ public class Users {
     @Column(name = "username", unique = true) // Maps this field to the "username" column in the database table.
     private String username;
 
+    @PrePersist
+    public void beforeSave() {
+        if (username != null) {
+            username = username.toLowerCase();
+        }
+    }
     @Column(name = "email") // Maps this field to the "email" column in the database table.
     private String email;
 
@@ -44,6 +51,9 @@ public class Users {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "conversation_id"))
     private List<Conversations> conversations;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Messages> messages;
 
     @Override
     public String toString() {

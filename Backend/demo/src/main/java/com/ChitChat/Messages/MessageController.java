@@ -1,12 +1,8 @@
 package com.ChitChat.Messages;
 
-import com.ChitChat.Conversations.Conversations;
-import com.ChitChat.DTO.ConversationDto.ConversationDto;
-import com.ChitChat.DTO.ConversationDto.ConversationMapper;
 import com.ChitChat.DTO.MessageDto.MessageDto;
 import com.ChitChat.DTO.MessageDto.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;

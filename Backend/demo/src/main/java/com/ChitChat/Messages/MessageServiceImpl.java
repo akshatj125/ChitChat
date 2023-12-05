@@ -2,6 +2,7 @@ package com.ChitChat.Messages;
 
 import com.ChitChat.Conversations.ConversationRepository;
 import com.ChitChat.Conversations.Conversations;
+import com.ChitChat.Users.Users;
 import com.ChitChat.exceptions.AppException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

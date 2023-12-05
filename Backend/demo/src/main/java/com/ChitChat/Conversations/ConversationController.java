@@ -2,12 +2,10 @@ package com.ChitChat.Conversations;
 
 import com.ChitChat.DTO.ConversationDto.ConversationDto;
 import com.ChitChat.DTO.ConversationDto.ConversationMapper;
-import com.ChitChat.DTO.UserDetailDto.UserDetailMapper;
 import com.ChitChat.Users.UserRepository;
 import com.ChitChat.Users.UserService;
 import com.ChitChat.Users.Users;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -20,11 +18,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConversationController {
 
-//    private final ConversationRepository conversationRepository;
-
     private final ConversationService conversationService;
 
     private final UserService userService;
+
+    private final ConversationRepository conversationRepository;
+
+    private final UserRepository userRepository;
 
     @PostMapping("/conversations")
     @Transactional
@@ -42,7 +42,6 @@ public class ConversationController {
     @GetMapping("/conversations")
     public ResponseEntity<List<Conversations>> conversationsOfUser(Authentication authentication){
         Users user =(Users) authentication.getPrincipal();
-//        Users user = userService.findByUsername(username).get();
 
         List<Conversations> conversation = conversationService.findAllConversation();
 

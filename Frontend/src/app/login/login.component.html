@@ -10,58 +10,70 @@
           <div class="row justify-content-center">
             <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
               <p class="text-center h1 fw-bold mb-3 mx-1 mx-md-4 mt-3">Login</p>
-            <div class="mt-1">
-              <form #loginForm="ngForm">
+              <div class="mt-1">
+                <form #loginForm="ngForm">
+                  <label
+                    class="form-label fs-6 fw-bold text-black-50"
+                    for="username"
+                    >Username</label
+                  >
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    required
+                    [(ngModel)]="userdata.username"
+                    (ngModelChange)="onUsernameChange()"
+                    #username="ngModel"
+                    [class.is-invalid]="username.invalid && username.touched"
+                    name="username"
+                    class="form-control form-control-lg col-sm-12 rounded-3 border border-black border-1"
+                  />
+                  <br />
+                  <div
+                    *ngIf="username.invalid && username.touched"
+                    class="invalidMessage"
+                  >
+                    Please Enter your Username
+                  </div>
 
-                <label class="form-label fs-6 fw-bold text-black-50" for="username">Username</label>
-                <input
-                  type="text"
-                  placeholder="Username"
-                  required
-                  [(ngModel)]="userdata.username"
-                  #username="ngModel"
-                  [class.is-invalid]="username.invalid && username.touched"
-                  name="username"
-                  class="form-control form-control-lg col-sm-12 rounded-3 border border-black border-1"
-                />
-                <br />
-                <div
-                  *ngIf="username.invalid && username.touched"
-                  class="invalidMessage"
-                >
-                  Please Enter your Username
-                </div>
+                  <label
+                    class="form-label fs-6 fw-bold text-black-50"
+                    for="password"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    required
+                    [(ngModel)]="userdata.password"
+                    #password="ngModel"
+                    [class.is-invalid]="password.invalid && password.touched"
+                    name="password"
+                    class="form-control form-control-lg col-sm-12 rounded-3 border border-black border-1"
+                  />
+                  <br />
+                  <div
+                    *ngIf="password.invalid && password.touched"
+                    class="invalidMessage"
+                  >
+                    Please Enter your Password
+                  </div>
+                  <div class="text-center">
+                    <button
+                      [disabled]="loginForm.form.invalid"
+                      [class.btnEnabled]="loginForm.form.valid"
+                      (click)="login()"
+                      type="button"
+                    >
+                      Login
+                    </button>
+                  </div>
 
-                <label class="form-label fs-6 fw-bold text-black-50" for="password">Password</label>
-                <input
-                  type="password"
-                  placeholder="Password"
-                  required
-                  [(ngModel)]="userdata.password"
-                  #password="ngModel"
-                  [class.is-invalid]="password.invalid && password.touched"
-                  name="password"
-                  class="form-control form-control-lg col-sm-12 rounded-3 border border-black border-1"
-                />
-                <br />
-                <div
-                  *ngIf="password.invalid && password.touched"
-                  class="invalidMessage"
-                >
-                  Please Enter your Password
-                </div>
-                <div class="text-center">
-                  <button
-                  [disabled]="loginForm.form.invalid"
-                  [class.btnEnabled]="loginForm.form.valid"
-                  (click)="login()"
-                  type="button"
-                >
-                  Login
-                </button>
-                </div>
-              </form>
-            </div>
+                  <div class="text-center">
+                    <p>New user? <a href="/signup"> Signup </a></p>
+                  </div>
+                </form>
+              </div>
             </div>
             <div
               class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2"

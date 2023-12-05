@@ -25,17 +25,40 @@ body {
   font-size: 0.9rem;
 }
 
-.messages-box,
+.messages-box {
+  height: 510px;
+  overflow-y: scroll;
+}
+
 .chat-box {
   height: 510px;
   overflow-y: scroll;
 }
 
+
 .rounded-lg {
   border-radius: 0.5rem;
 }
 
-input::placeholder {
-  font-size: 0.9rem;
-  color: #999;
+
+.itemName{
+  margin-left: 1rem;
+}
+
+.conversation-separator {
+  height: 2px;
+  background-color: #fff;
+  width: 100%;
+}
+
+.box{
+  height: 6rem;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.sendBtn{
+  width: 3rem;
+  background-color: aquamarine;
 }

@@ -1,24 +1,28 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ConversationService } from './Service/conversation.service';
-import { conversation } from '../interfaces/conversation';
+import { WebSocketService } from './ChatService/Service/chat.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-chatwindow',
   templateUrl: './chatwindow.component.html',
   styleUrls: ['./chatwindow.component.css'],
 })
-export class ChatwindowComponent implements OnInit {
+export class ChatwindowComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject();
 
   constructor(
-    private http: HttpClientModule,
-    private conversationService: ConversationService
+    private conversationService: ConversationService,
+    private webSocketService: WebSocketService
   ) {}
 
-  convdata : any = {
-    name: ""
+  convdata: any = {
+    name: '',
   };
-  
+  messages: any[] = [];
+  newMessage: string = '';
+
   getConvData() {
     this.conversationService.getConvData().subscribe((data) => {
       console.log(data);
@@ -28,5 +32,30 @@ export class ChatwindowComponent implements OnInit {
 
   ngOnInit(): void {
     this.getConvData();
+
+    this.webSocketService.connect('ws://localhost:8080/ws');
+    this.webSocketService.onMessage()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((message) => {
+        console.log('Received message:', message);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+    this.webSocketService.closeConnection();
+  }
+
+  sendMessage(): void {
+    if (this.newMessage.trim() !== '') {
+      const message = {
+        content: this.newMessage,
+        sender: 'self',
+        timestamp: new Date(),
+      };
+      this.webSocketService.sendMessage(message);
+      this.newMessage = '';
+    }
   }
 }
