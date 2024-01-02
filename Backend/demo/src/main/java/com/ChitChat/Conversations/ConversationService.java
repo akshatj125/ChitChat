@@ -1,5 +1,7 @@
 package com.ChitChat.Conversations;
 
+import com.ChitChat.DTO.ConversationDto.ConversationDto;
+import com.ChitChat.DTO.MessageDto.MessageDto;
 import com.ChitChat.Messages.Messages;
 import com.ChitChat.Users.Users;
 import org.springframework.security.core.Authentication;
@@ -14,7 +16,5 @@ public interface ConversationService {
 
     List<Conversations> findAllConversation();
 
-    Conversations addConversationToUser(int userId, int conversationId);
-
-    Conversations addMessageToConversation(int messageId, int conversationId);
+//    void sendMessage(MessageDto messageDto, Authentication authentication);
 }

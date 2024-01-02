@@ -1,0 +1,75 @@
+<div class="main-container">
+  <aside class="left-side">
+    <div class="header-container">
+      <div class="header">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search" />
+        </div>
+        <!-- <hr style="color: black;"> -->
+      </div>
+    </div>
+
+    <div class="body-container">
+      <div class="chat-list">
+        <div
+          *ngFor="let conversation of conversations; let i = index"
+          class="chat-box"
+          [class.active]="i === highlightedIndex"
+          (click)="chatBoxClicked(i)"
+        >
+          <div class="chat-details">
+            <div class="chat-title">
+              <h4>{{ conversation.name }}</h4>
+              <span class="chat-time">{{
+                getLatestMessageTime(conversation.messages)
+              }}</span>
+            </div>
+            <div class="chat-msg">
+              <p>{{ getLatestMessage(conversation.messages) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <section class="content-container">
+    <div class="content">
+      <div class="content-header">
+        <div class="content-chat-details">
+          <h5 class="content-chat-title">
+            {{
+              conversations[highlightedIndex]?.name ||
+                "No conversation selected"
+            }}
+          </h5>
+        </div>
+      </div>
+      <div class="message-box">
+        <div
+          class="message-container"
+          *ngFor="let msg of conversations[highlightedIndex]?.messages"
+        >
+          <p class="msg-content">{{ msg.message }}</p>
+          <p class="msg-time text-muted">
+            {{ msg.timestamp | date : "shortTime" }}
+          </p>
+        </div>
+      </div>
+
+      <div class="content-bottom-section">
+        <div *ngIf="highightChatBox" class="send-message">
+          <input
+            [(ngModel)]="newMessage"
+            type="text"
+            placeholder="Type message"
+          />
+          <button (click)="sendMessage()" style="border: none">
+            <i class="fa fa-send-o"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

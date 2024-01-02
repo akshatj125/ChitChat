@@ -13,10 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 public class ConversationDto {
 
+    private Integer id;
+
     private String name;
 
     private List<Users> participants;
 
     private List<Messages> messages;
-
 }

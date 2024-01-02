@@ -1,0 +1,24 @@
+.main-section{
+  position: relative;
+  height: 90vh;
+  opacity: .2;
+  background-size: cover;
+  background-image: url('../../assets/bg/pattern.png');
+}
+
+.start-chat{
+  position: absolute;
+  top: 16rem;
+  left: 38rem;
+  padding: 20px 30px;
+  border: 2px solid #000;
+  z-index: 1;
+  text-align: center;
+  font-size: 25px;
+  background-color: #ced4da4f;
+  border-radius: 20px;
+}
+
+h3{
+  color: black;
+}

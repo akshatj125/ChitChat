@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class MessageDto {
 
     private String message;
-    private Conversations conversations;
+
+    private int conversationId;
 
 }

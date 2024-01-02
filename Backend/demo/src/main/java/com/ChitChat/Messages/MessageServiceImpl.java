@@ -2,15 +2,14 @@ package com.ChitChat.Messages;
 
 import com.ChitChat.Conversations.ConversationRepository;
 import com.ChitChat.Conversations.Conversations;
+import com.ChitChat.DTO.MessageDto.MessageDto;
 import com.ChitChat.Users.Users;
-import com.ChitChat.exceptions.AppException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,11 +29,15 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Messages addConversationToMessage(int messageId, int conversationId) {
-        Conversations conversation = conversationRepository.findById(conversationId).orElseThrow(()->new AppException("Conversation not found", HttpStatus.NOT_FOUND));
-        Messages message = messageRepository.findById(messageId).orElseThrow(()->new AppException("Message not found", HttpStatus.NOT_FOUND));
-        message.setConversation(conversation);
-        messageRepository.save(message);
-        return message;
+    @Transactional
+    public void sendMessage(MessageDto messageDto, Authentication authentication){
+        Users user = (Users) authentication.getPrincipal();
+        int conversationId = messageDto.getConversationId();
+        Conversations conversation = conversationRepository.findById(conversationId).orElseThrow();
+        Messages newMessage = new Messages();
+        newMessage.setMessage(messageDto.getMessage());
+        newMessage.setConversation(conversation);
+
+        messageRepository.save(newMessage);
     }
 }

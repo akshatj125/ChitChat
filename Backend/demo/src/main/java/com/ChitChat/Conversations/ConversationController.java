@@ -2,6 +2,8 @@ package com.ChitChat.Conversations;
 
 import com.ChitChat.DTO.ConversationDto.ConversationDto;
 import com.ChitChat.DTO.ConversationDto.ConversationMapper;
+import com.ChitChat.DTO.MessageDto.MessageDto;
+import com.ChitChat.Messages.Messages;
 import com.ChitChat.Users.UserRepository;
 import com.ChitChat.Users.UserService;
 import com.ChitChat.Users.Users;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:4200")
 public class ConversationController {
 
     private final ConversationService conversationService;
@@ -34,40 +37,29 @@ public class ConversationController {
 
     @GetMapping("/viewConversations")
     public ResponseEntity<List<ConversationDto>> viewConversations(Authentication authentication){
+        Users user = (Users) authentication.getPrincipal();
         List<Conversations> conversations = conversationService.findAllConversation();
-        System.out.println(authentication);
-        return new ResponseEntity<>(ConversationMapper.mapToConversationDto(conversations), HttpStatus.OK);
+        return new ResponseEntity<>(ConversationMapper.mapToConversationDto(conversations, user.getUsername()), HttpStatus.OK);
     }
 
     @GetMapping("/conversations")
-    public ResponseEntity<List<Conversations>> conversationsOfUser(Authentication authentication){
+    public ResponseEntity<List<ConversationDto>> conversationsOfUser(Authentication authentication){
         Users user =(Users) authentication.getPrincipal();
 
         List<Conversations> conversation = conversationService.findAllConversation();
 
-        return new ResponseEntity<>(conversation, HttpStatus.OK);
+        return new ResponseEntity<>(ConversationMapper.mapToConversationDto(conversation, user.getUsername()), HttpStatus.OK);
     }
 
-    @PostMapping("/conversations/{conversationId}/user/{userId}")
-    @Transactional
-    public ResponseEntity<ConversationDto> addConversationToUsers(@PathVariable int userId, @PathVariable int conversationId){
-        Conversations conversation = conversationService.addConversationToUser(userId, conversationId);
-        if (conversation == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        ConversationDto conversationDto = ConversationMapper.mapToConversationDto(conversation);
-        return new ResponseEntity<>(conversationDto, HttpStatus.OK);
-    }
-
-    @PostMapping("/conversations/{conversationId}/messages/{messageId}")
-    @Transactional
-    public ResponseEntity<ConversationDto> addMessageToConversation(@PathVariable int conversationId, @PathVariable int messageId)
-    {
-        Conversations conversation = conversationService.addMessageToConversation(messageId, conversationId);
-        if(conversation == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        ConversationDto conversationDto = ConversationMapper.mapToConversationDto(conversation);
-        return new ResponseEntity<>(conversationDto, HttpStatus.OK);
-    }
+//    @PostMapping("/sendMessage")
+//    @Transactional
+//    public ResponseEntity<String> sendMessage(@RequestBody MessageDto messageDto, Authentication authentication) {
+//        try {
+//            conversationService.sendMessage(messageDto, authentication);
+//            return ResponseEntity.ok("Message sent successfully");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending message");
+//        }
+//    }
 }

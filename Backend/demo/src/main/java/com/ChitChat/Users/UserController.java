@@ -2,6 +2,8 @@ package com.ChitChat.Users;
 
 import com.ChitChat.Config.UserAuthProvider;
 import com.ChitChat.Conversations.Conversations;
+import com.ChitChat.DTO.ConversationDto.ConversationDto;
+import com.ChitChat.DTO.ConversationDto.ConversationMapper;
 import com.ChitChat.DTO.LoginDto.LoginDto;
 import com.ChitChat.DTO.LoginDto.LoginMapper;
 import com.ChitChat.DTO.SignupDto.SignupDto;
@@ -22,7 +24,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @CrossOrigin("http://localhost:4200")
 public class UserController {
-
 
     private final UserService userService;
     private final UserAuthProvider userAuthProvider;
@@ -87,6 +88,7 @@ public class UserController {
     public ResponseEntity<List<Conversations>> getConversationsForCurrentUser(Authentication authentication) {
         try {
             List<Conversations> conversations = userService.conversationsPerUser(authentication);
+            System.out.println(conversations);
             return ResponseEntity.ok(conversations);
         } catch (Exception e) {
             e.printStackTrace();

@@ -2,11 +2,13 @@ package com.ChitChat.Messages;
 
 import com.ChitChat.Conversations.Conversations;
 import com.ChitChat.Users.Users;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "messages")
@@ -31,7 +33,7 @@ public class Messages {
 
     @CreationTimestamp
     @Column(name = "timestamp")
-    private LocalDateTime timestamp;
+    private Date timestamp;
 
     @Override
     public String toString() {

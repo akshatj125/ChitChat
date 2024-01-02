@@ -1,8 +1,10 @@
 package com.ChitChat.Messages;
 
 import com.ChitChat.Conversations.Conversations;
+import com.ChitChat.DTO.MessageDto.MessageDto;
 import com.ChitChat.Messages.Messages;
 import com.ChitChat.Users.Users;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -10,7 +12,7 @@ public interface MessageService {
 
     Messages saveMessage(Messages message);
 
-    public List<Messages> findAllMessage();
+    List<Messages> findAllMessage();
 
-    Messages addConversationToMessage(int messageId, int conversationId);
+    void sendMessage(MessageDto messageDto, Authentication authentication);
 }

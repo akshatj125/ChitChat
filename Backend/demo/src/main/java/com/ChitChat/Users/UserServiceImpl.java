@@ -60,7 +60,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Conversations> conversationsPerUser(Authentication authentication) {
         Users user = (Users) authentication.getPrincipal();
-        System.out.println(user.getConversations());
         return user.getConversations();
     }
 }

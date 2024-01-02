@@ -4,10 +4,12 @@ import com.ChitChat.Messages.Messages;
 import com.ChitChat.Users.Users;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -28,15 +30,16 @@ public class Conversations {
 
     @OneToMany(mappedBy = "conversation", fetch = FetchType.EAGER)
     @JsonIgnore
+//    @JsonManagedReference
     private List<Messages> messages;
 
     @CreationTimestamp
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "timestamp", nullable = false, updatable = false)
-    private LocalDateTime timestamp;
+    private Date timestamp;
 
-    @ManyToMany(mappedBy = "conversations")
-    @JsonIgnore
+    @ManyToMany(mappedBy = "conversations", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Users> users;
 
     @Override
@@ -46,6 +49,7 @@ public class Conversations {
                 ", name='" + name + '\'' +
                 ", status=" + status +
                 ", messages=" + messages +
+                ", users=" + users +
                 ", timestamp=" + timestamp +
                 '}';
     }

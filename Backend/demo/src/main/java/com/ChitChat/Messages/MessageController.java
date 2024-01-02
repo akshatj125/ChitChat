@@ -5,12 +5,14 @@ import com.ChitChat.DTO.MessageDto.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 public class MessageController {
 
     private MessageService messageService;
@@ -30,15 +32,16 @@ public class MessageController {
         return messageService.findAllMessage();
     }
 
-    @PostMapping("/message/{messageId}/conversation/{conversationId}")
-    @Transactional
-    public ResponseEntity<MessageDto> addConversationToMessage(@PathVariable int conversationId, @PathVariable int messageId)
-    {
-        Messages messages = messageService.addConversationToMessage(messageId, conversationId);
-        if(messages == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    @PostMapping("/sendMessage")
+    public ResponseEntity<String> sendMessage(@RequestBody MessageDto messageDto, Authentication authentication) {
+        try {
+            messageService.sendMessage(messageDto, authentication);
+            System.out.println("Message sent");
+            return ResponseEntity.ok("Message sent successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending message");
         }
-        MessageDto messageDto = MessageMapper.mapToMessageDto(messages);
-        return new ResponseEntity<>(messageDto, HttpStatus.OK);
     }
 }

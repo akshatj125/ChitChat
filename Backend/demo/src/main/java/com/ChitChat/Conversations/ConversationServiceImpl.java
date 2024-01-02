@@ -1,5 +1,7 @@
 package com.ChitChat.Conversations;
 
+import com.ChitChat.DTO.ConversationDto.ConversationDto;
+import com.ChitChat.DTO.MessageDto.MessageDto;
 import com.ChitChat.Messages.MessageRepository;
 import com.ChitChat.Messages.Messages;
 import com.ChitChat.Users.UserRepository;
@@ -7,6 +9,7 @@ import com.ChitChat.Users.Users;
 import com.ChitChat.exceptions.AppException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -32,21 +35,16 @@ public class ConversationServiceImpl implements ConversationService {
         return conversationRepository.findAll();
     }
 
-    @Override
-    public Conversations addConversationToUser(int userId, int conversationId) {
-        Users user = userRepository.findById(userId).orElseThrow(()->new AppException("User not found", HttpStatus.NOT_FOUND));
-        Conversations conversation = conversationRepository.findById(conversationId).orElseThrow(()->new AppException("Conversation not found", HttpStatus.NOT_FOUND));
-        conversation.getUsers().add(user);
-        conversationRepository.save(conversation);
-        return conversation;
-    }
-
-    @Override
-    public Conversations addMessageToConversation(int messageId, int conversationId) {
-        Messages message = messageRepository.findById(messageId).orElseThrow(()->new AppException("Message not found", HttpStatus.NOT_FOUND));
-        Conversations conversation = conversationRepository.findById(conversationId).orElseThrow(()->new AppException("Conversation not found", HttpStatus.NOT_FOUND));
-        conversation.getMessages().add(message);
-        conversationRepository.save(conversation);
-        return conversation;
-    }
+//    @Override
+//    public void sendMessage(MessageDto messageDto, Authentication authentication){
+//        Users user = (Users) authentication.getPrincipal();
+//        System.out.println(messageDto.getConversations());
+//
+//        Messages newMessage = new Messages();
+//        newMessage.setMessage(messageDto.getMessage());
+//        newMessage.setConversation(messageDto.getConversations());
+//
+//        messageRepository.save(newMessage);
+//
+//    }
 }

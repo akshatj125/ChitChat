@@ -1,5 +1,6 @@
 package com.ChitChat.DTO.MessageDto;
 
+import com.ChitChat.Conversations.Conversations;
 import com.ChitChat.DTO.ConversationDto.ConversationMapper;
 import com.ChitChat.Messages.Messages;
 
@@ -10,7 +11,7 @@ public class MessageMapper {
     public static MessageDto mapToMessageDto(Messages messages) {
         return new MessageDto(
                 messages.getMessage(),
-                messages.getConversation()
+                messages.getConversation().getId()
         );
     }
 

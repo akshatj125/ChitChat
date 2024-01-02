@@ -40,7 +40,7 @@ export class LoginComponent {
           url="/home"
         }
         localStorage.removeItem("redirectUrl")
-        this.router.navigate(['/chat']);
+        this.router.navigate(['/home']);
       
       },
       error=>{

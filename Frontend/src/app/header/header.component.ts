@@ -21,9 +21,9 @@ export class HeaderComponent {
 
   navigateBasedOnLoginStatus() {
     if (this.isLoggedIn()) {
-      this.router.navigate(['/chat']);
-    } else {
       this.router.navigate(['/home']);
+    } else {
+      this.router.navigate(['/splash']);
     }
   }
 }

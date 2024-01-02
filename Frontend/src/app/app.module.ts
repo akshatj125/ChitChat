@@ -11,7 +11,9 @@ import { FooterComponent } from './footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
-import { ChatwindowComponent } from './chatwindow/chatwindow.component';
+import { ChatComponent } from './chat/chat.component';
+import { SplashScreenComponent } from './splash-screen/splash-screen.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { ChatwindowComponent } from './chatwindow/chatwindow.component';
     HomeComponent,
     FooterComponent,
     LoginComponent,
-    ChatwindowComponent
+    ChatComponent,
+    SplashScreenComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,9 @@ import { ChatwindowComponent } from './chatwindow/chatwindow.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
