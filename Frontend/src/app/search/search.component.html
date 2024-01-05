@@ -1,0 +1,12 @@
+<div class="header-container">
+  <div class="header">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input
+      [(ngModel)] = "searchValue"
+      (input)="onSearchValueChanged()"
+      type="text"
+      placeholder="Search" />
+    </div>
+  </div>
+</div>

@@ -13,11 +13,20 @@ export class WebSocketService {
 
   constructor() { 
     this.username=localStorage.getItem('username');
-    this.stompClient.connect({},()=>{
+    this.connectWebSocket();
+  }
+
+  connectWebSocket(){
+    this.stompClient.connect({}
+      ,()=>{
       this.stompClient.subscribe("/topic/chat/"+this.username,(data)=>{
         this.receivedMessages.next(data.body);
       })
-    })
+    },
+    ()=>{
+      console.log("Disconnected")
+    }
+    )
   }
 
   getMessages(){

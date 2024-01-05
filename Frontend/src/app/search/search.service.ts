@@ -1,25 +1,26 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class UserService {
-  private baseUrl = 'http://localhost:8080';
-  private token: string | null;
+export class SearchService {
+
+  private apiUrl = 'http://localhost:8080/users/users';
+  token: string | null;
 
   constructor(private http: HttpClient) {
     this.token = localStorage.getItem('token');
   }
 
-  getUserData(): Observable<any> {
-    const url="http://localhost:8080/users/profile"
+  getSearchValue(): Observable<any> {
+    const url= this.apiUrl;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`,
     });
 
     return this.http.get(url, { headers });
   }
+  
 }
-

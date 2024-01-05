@@ -6,41 +6,6 @@
   flex: 1;
 }
 
-.header-container {
-  margin-top: 40px;
-}
-
-.header {
-  background-color: #555555;
-}
-
-.search-box {
-  margin-top: 49px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  position: relative;
-  width: 100%;
-  padding: 1.5rem 1rem;
-  display: flex;
-  gap: 1rem;
-}
-
-.search-box input {
-  position: relative;
-  border: none;
-  border-radius: 18px;
-  outline: none;
-  height: 35px;
-  width: 100%;
-  padding-left: 10px;
-}
-
-.search-box input::placeholder {
-  font-size: 1.2rem;
-}
-
 .body-container {
   margin-bottom: 1rem;
 }
@@ -95,6 +60,7 @@
   padding-left: 10px;
   align-items: center;
   padding: 20px;
+  margin-bottom: 10px;
 }
 
 .message-box {

@@ -1,19 +1,13 @@
 <div class="main-container">
   <aside class="left-side">
-    <div class="header-container">
-      <div class="header">
-        <div class="search-box">
-          <i class="fas fa-search"></i>
-          <input type="text" placeholder="Search" />
-        </div>
-      </div>
-    </div>
+    <app-search (searchValueChanged)="onSearchTextEntered($event)"></app-search>
 
     <div class="body-container">
       <div class="chat-list">
         <div
           *ngFor="let conversation of conversations; let i = index"
           class="chat-box"
+          
           [class.active]="i === highlightedIndex"
           (click)="chatBoxClicked(i)"
         >
@@ -62,6 +56,7 @@
         <div *ngIf="highlightChatBox" class="send-message">
           <input
             [(ngModel)]="newMessage"
+            (keydown.enter)="sendMessage()"
             type="text"
             placeholder="Type message"
           />

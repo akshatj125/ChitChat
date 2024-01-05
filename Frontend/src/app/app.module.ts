@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { ChatComponent } from './chat/chat.component';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 import { DatePipe } from '@angular/common';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { DatePipe } from '@angular/common';
     LoginComponent,
     ChatComponent,
     SplashScreenComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,

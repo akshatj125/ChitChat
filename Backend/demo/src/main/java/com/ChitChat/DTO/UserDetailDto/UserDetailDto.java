@@ -16,6 +16,5 @@ public class UserDetailDto {
     private String username;
     private String email;
     private String profilepicture;
-//    private LocalDateTime created_at;
 
 }

@@ -85,6 +85,7 @@
                   #password="ngModel"
                   [class.is-invalid]="password.invalid && password.touched"
                   name="password"
+                  (keydown.enter)="signup()"
                   class="form-control form-control-lg col-sm-12 rounded-3 border border-black border-1"
                 />
                 <br />

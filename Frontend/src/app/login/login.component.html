@@ -46,6 +46,7 @@
                     placeholder="Password"
                     required
                     [(ngModel)]="userdata.password"
+                    (keydown.enter)="login()"
                     #password="ngModel"
                     [class.is-invalid]="password.invalid && password.touched"
                     name="password"

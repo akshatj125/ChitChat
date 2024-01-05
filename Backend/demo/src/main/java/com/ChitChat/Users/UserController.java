@@ -59,9 +59,9 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<LoginDto>> showUser() {
+    public ResponseEntity<List<UserDetailDto>> showUser() {
         List<Users> users = userService.findAll();
-        return new ResponseEntity<>(LoginMapper.mapToUserDto(users), HttpStatus.OK);
+        return new ResponseEntity<>(UserDetailMapper.mapToUserDto(users), HttpStatus.OK);
     }
 
 
