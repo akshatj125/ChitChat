@@ -1,5 +1,6 @@
 package com.ChitChat.Conversations;
 
+import com.ChitChat.Config.WebSocketService;
 import com.ChitChat.DTO.ConversationDto.ConversationDto;
 import com.ChitChat.DTO.ConversationDto.ConversationMapper;
 import com.ChitChat.DTO.MessageDto.MessageDto;
@@ -23,12 +24,6 @@ public class ConversationController {
 
     private final ConversationService conversationService;
 
-    private final UserService userService;
-
-    private final ConversationRepository conversationRepository;
-
-    private final UserRepository userRepository;
-
     @PostMapping("/conversations")
     @Transactional
     public Conversations saveConversation(@RequestBody Conversations conversations) {
@@ -50,16 +45,4 @@ public class ConversationController {
 
         return new ResponseEntity<>(ConversationMapper.mapToConversationDto(conversation, user.getUsername()), HttpStatus.OK);
     }
-
-//    @PostMapping("/sendMessage")
-//    @Transactional
-//    public ResponseEntity<String> sendMessage(@RequestBody MessageDto messageDto, Authentication authentication) {
-//        try {
-//            conversationService.sendMessage(messageDto, authentication);
-//            return ResponseEntity.ok("Message sent successfully");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending message");
-//        }
-//    }
 }

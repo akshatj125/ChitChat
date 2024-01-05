@@ -33,6 +33,7 @@ export class LoginComponent {
     response.subscribe((data) => {
       console.log(data);
       localStorage.setItem('token', data);
+      localStorage.setItem('username', this.userdata.username);
 
       var url=localStorage.getItem("redirectUrl")
         if(url==null)

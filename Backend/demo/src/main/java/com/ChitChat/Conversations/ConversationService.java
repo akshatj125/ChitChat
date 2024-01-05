@@ -16,5 +16,4 @@ public interface ConversationService {
 
     List<Conversations> findAllConversation();
 
-//    void sendMessage(MessageDto messageDto, Authentication authentication);
 }

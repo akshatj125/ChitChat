@@ -3,6 +3,7 @@ package com.ChitChat.Users;
 import com.ChitChat.Conversations.Conversations;
 import com.ChitChat.Conversations.ConversationRepository;
 import com.ChitChat.DTO.ConversationDto.ConversationDto;
+import com.ChitChat.DTO.ConversationDto.ConversationMapper;
 import com.ChitChat.DTO.UserDetailDto.UserDetailDto;
 import com.ChitChat.exceptions.AppException;
 import jakarta.persistence.EntityNotFoundException;
@@ -58,8 +59,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Conversations> conversationsPerUser(Authentication authentication) {
+    public List<ConversationDto> conversationsPerUser(Authentication authentication) {
         Users user = (Users) authentication.getPrincipal();
-        return user.getConversations();
+        return ConversationMapper.mapToConversationDto(user.getConversations(),user.getUsername());
     }
 }

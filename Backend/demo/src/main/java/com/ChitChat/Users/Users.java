@@ -6,6 +6,7 @@ import java.util.List;
 import com.ChitChat.Conversations.Conversations;
 import com.ChitChat.Messages.Messages;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -51,10 +52,11 @@ public class Users {
     @JoinTable(name = "user_conversations",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "conversation_id"))
-    @JsonBackReference
+//    @JsonBackReference
     private List<Conversations> conversations;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Messages> messages;
 
     @Override

@@ -6,7 +6,6 @@
           <i class="fas fa-search"></i>
           <input type="text" placeholder="Search" />
         </div>
-        <!-- <hr style="color: black;"> -->
       </div>
     </div>
 
@@ -46,20 +45,21 @@
           </h5>
         </div>
       </div>
-      <div class="message-box">
+      <div #messageBox class="message-box">
         <div
           class="message-container"
           *ngFor="let msg of conversations[highlightedIndex]?.messages"
         >
+          <p class="msg-username" >{{ msg.senderUsername }}</p>
           <p class="msg-content">{{ msg.message }}</p>
           <p class="msg-time text-muted">
-            {{ msg.timestamp | date : "shortTime" }}
+            {{ msg.sentAt | date : "shortTime" }}
           </p>
         </div>
       </div>
 
       <div class="content-bottom-section">
-        <div *ngIf="highightChatBox" class="send-message">
+        <div *ngIf="highlightChatBox" class="send-message">
           <input
             [(ngModel)]="newMessage"
             type="text"

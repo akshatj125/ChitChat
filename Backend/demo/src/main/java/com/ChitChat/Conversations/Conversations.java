@@ -2,6 +2,7 @@ package com.ChitChat.Conversations;
 
 import com.ChitChat.Messages.Messages;
 import com.ChitChat.Users.Users;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -34,12 +35,11 @@ public class Conversations {
     private List<Messages> messages;
 
     @CreationTimestamp
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "timestamp", nullable = false, updatable = false)
     private Date timestamp;
 
     @ManyToMany(mappedBy = "conversations", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Users> users;
 
     @Override

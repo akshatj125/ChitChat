@@ -11,9 +11,7 @@ public class UserDetailMapper {
         return new UserDetailDto(
                 user.getUsername(),
                 user.getEmail(),
-                user.getProfilepicture(),
-                user.getCreated_at(),
-                user.getConversations()
+                user.getProfilepicture()
         );
     }
     public static List<UserDetailDto> mapToUserDto(List<Users> users){

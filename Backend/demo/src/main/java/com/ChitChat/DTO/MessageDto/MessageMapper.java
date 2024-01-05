@@ -11,7 +11,9 @@ public class MessageMapper {
     public static MessageDto mapToMessageDto(Messages messages) {
         return new MessageDto(
                 messages.getMessage(),
-                messages.getConversation().getId()
+                messages.getConversation().getId(),
+                messages.getUser().getUsername(),
+                messages.getTimestamp()
         );
     }
 

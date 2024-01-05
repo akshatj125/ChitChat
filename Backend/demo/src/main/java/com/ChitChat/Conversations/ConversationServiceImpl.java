@@ -21,9 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ConversationServiceImpl implements ConversationService {
 
-    private final UserRepository userRepository;
     private final ConversationRepository conversationRepository;
-    private final MessageRepository messageRepository;
 
     @Override
     public Conversations saveConversations(Conversations conversations) {
@@ -35,16 +33,4 @@ public class ConversationServiceImpl implements ConversationService {
         return conversationRepository.findAll();
     }
 
-//    @Override
-//    public void sendMessage(MessageDto messageDto, Authentication authentication){
-//        Users user = (Users) authentication.getPrincipal();
-//        System.out.println(messageDto.getConversations());
-//
-//        Messages newMessage = new Messages();
-//        newMessage.setMessage(messageDto.getMessage());
-//        newMessage.setConversation(messageDto.getConversations());
-//
-//        messageRepository.save(newMessage);
-//
-//    }
 }

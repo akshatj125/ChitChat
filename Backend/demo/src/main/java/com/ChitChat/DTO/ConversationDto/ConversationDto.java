@@ -1,5 +1,7 @@
 package com.ChitChat.DTO.ConversationDto;
 
+import com.ChitChat.DTO.MessageDto.MessageDto;
+import com.ChitChat.DTO.UserDetailDto.UserDetailDto;
 import com.ChitChat.Messages.Messages;
 import com.ChitChat.Users.Users;
 import lombok.AllArgsConstructor;
@@ -17,7 +19,7 @@ public class ConversationDto {
 
     private String name;
 
-    private List<Users> participants;
+    private List<UserDetailDto> participants;
 
-    private List<Messages> messages;
+    private List<MessageDto> messages;
 }

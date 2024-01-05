@@ -1,6 +1,8 @@
 package com.ChitChat.DTO.ConversationDto;
 
 import com.ChitChat.Conversations.Conversations;
+import com.ChitChat.DTO.MessageDto.MessageMapper;
+import com.ChitChat.DTO.UserDetailDto.UserDetailMapper;
 import com.ChitChat.Messages.Messages;
 import com.ChitChat.Users.Users;
 
@@ -16,13 +18,14 @@ public class ConversationMapper {
                 return !user1.getUsername().equals(username);
             }).findFirst().orElseThrow();
             name=user2.getUsername();
+            System.out.println(name);
         }
 
         return new ConversationDto(
                 conversation.getId(),
                 name,
-                conversation.getUsers(),
-                conversation.getMessages()
+                UserDetailMapper.mapToUserDto(conversation.getUsers()),
+                MessageMapper.mapToMessageDto(conversation.getMessages())
         );
     }
 

@@ -85,9 +85,9 @@ public class UserController {
     }
 
     @GetMapping("/conversations")
-    public ResponseEntity<List<Conversations>> getConversationsForCurrentUser(Authentication authentication) {
+    public ResponseEntity<List<ConversationDto>> getConversationsForCurrentUser(Authentication authentication) {
         try {
-            List<Conversations> conversations = userService.conversationsPerUser(authentication);
+            List<ConversationDto> conversations = userService.conversationsPerUser(authentication);
             System.out.println(conversations);
             return ResponseEntity.ok(conversations);
         } catch (Exception e) {

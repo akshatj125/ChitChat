@@ -7,7 +7,7 @@ import { ConversationDto } from '../interfaces/conversationDto';
   providedIn: 'root'
 })
 export class ChatService {
-  private apiUrl = 'http://localhost:8080/conversations';
+  private apiUrl = 'http://localhost:8080/users/conversations';
 
   constructor(private http: HttpClient) {}
 

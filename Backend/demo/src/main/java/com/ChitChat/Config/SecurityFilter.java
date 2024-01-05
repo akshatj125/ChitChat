@@ -27,6 +27,7 @@ public class SecurityFilter {
                 .authorizeHttpRequests(
                         (request) -> {
                             request.requestMatchers(HttpMethod.GET, "/users/signup","/users/login").permitAll()
+                                    .requestMatchers("ws/**").permitAll()
                                     .requestMatchers(HttpMethod.POST, "/users/signup","/users/login").permitAll()
                                     .anyRequest().authenticated();
                         }

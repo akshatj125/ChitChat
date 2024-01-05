@@ -23,6 +23,6 @@ public interface UserService {
 
     void removeUser(int userId);
 
-    List<Conversations> conversationsPerUser(Authentication authentication);
+    List<ConversationDto> conversationsPerUser(Authentication authentication);
 
 }

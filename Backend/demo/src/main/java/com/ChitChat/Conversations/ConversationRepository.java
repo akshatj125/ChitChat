@@ -11,5 +11,4 @@ public interface ConversationRepository extends JpaRepository<Conversations, Int
 
     Optional<Conversations> findByName(String name);
 
-//    List<Conversations> findByUsername(Users user);
 }

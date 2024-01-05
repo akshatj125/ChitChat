@@ -1,9 +1,10 @@
 package com.ChitChat.DTO.MessageDto;
 
-import com.ChitChat.Conversations.Conversations;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -14,4 +15,7 @@ public class MessageDto {
 
     private int conversationId;
 
+    private String senderUsername;
+
+    private Date sentAt;
 }

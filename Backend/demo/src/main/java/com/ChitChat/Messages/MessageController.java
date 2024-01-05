@@ -35,6 +35,7 @@ public class MessageController {
 
     @PostMapping("/sendMessage")
     public ResponseEntity<String> sendMessage(@RequestBody MessageDto messageDto, Authentication authentication) {
+        System.out.println("Send Message");
         try {
             messageService.sendMessage(messageDto, authentication);
             System.out.println("Message sent");

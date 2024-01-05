@@ -3,6 +3,7 @@ package com.ChitChat.Messages;
 import com.ChitChat.Conversations.Conversations;
 import com.ChitChat.Users.Users;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,6 +23,7 @@ public class Messages {
 
     @ManyToOne
     @JoinColumn(name = "conversation_id")
+//    @JsonBackReference
     private Conversations conversation;
 
     @ManyToOne

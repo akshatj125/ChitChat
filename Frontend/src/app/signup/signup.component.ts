@@ -49,6 +49,7 @@ export class SignupComponent {
       .subscribe((data) => {
         console.log(data);
         localStorage.setItem('token', data as string);
+        localStorage.setItem('username', this.userdata.username);
         this.router.navigate(['/home']);
       });
   }
