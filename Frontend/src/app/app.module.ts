@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { SignupComponent } from './signup/signup.component';
 import { ProfileComponent } from './profile/profile.component';
-import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,19 +14,19 @@ import { ChatComponent } from './chat/chat.component';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 import { DatePipe } from '@angular/common';
 import { SearchComponent } from './search/search.component';
-
+import { UserSearchComponent } from './user-search/user-search.component';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SignupComponent,
     ProfileComponent,
-    HomeComponent,
     FooterComponent,
     LoginComponent,
     ChatComponent,
     SplashScreenComponent,
     SearchComponent,
+    UserSearchComponent,
   ],
   imports: [
     BrowserModule,

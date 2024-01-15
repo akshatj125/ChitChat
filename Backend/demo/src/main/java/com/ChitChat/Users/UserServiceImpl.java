@@ -5,6 +5,7 @@ import com.ChitChat.Conversations.ConversationRepository;
 import com.ChitChat.DTO.ConversationDto.ConversationDto;
 import com.ChitChat.DTO.ConversationDto.ConversationMapper;
 import com.ChitChat.DTO.UserDetailDto.UserDetailDto;
+import com.ChitChat.DTO.UserDetailDto.UserDetailMapper;
 import com.ChitChat.exceptions.AppException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -62,5 +64,13 @@ public class UserServiceImpl implements UserService {
     public List<ConversationDto> conversationsPerUser(Authentication authentication) {
         Users user = (Users) authentication.getPrincipal();
         return ConversationMapper.mapToConversationDto(user.getConversations(),user.getUsername());
+    }
+
+    @Override
+    public List<UserDetailDto> searchUsers(String query) {
+        List<Users> users = userRepository.findByUsernameContaining(query);
+        return users.stream()
+                .map(UserDetailMapper::mapToUserDto)
+                .collect(Collectors.toList());
     }
 }

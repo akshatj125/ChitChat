@@ -3,18 +3,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { ChatService } from './chat.service';
 import { ConversationDto } from '../interfaces/conversationDto';
-import { DatePipe, getLocaleMonthNames } from '@angular/common';
 import { MessageService } from './message.service';
 import { WebSocketService } from './web-socket.service';
-import { UserService } from '../profile/Service/user.service';
 import { Profile } from '../interfaces/profile';
-import { SearchService } from '../search/search.service';
-import { filter } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-chat',
@@ -25,10 +23,11 @@ import { filter } from 'rxjs';
 export class ChatComponent implements OnInit, AfterViewChecked {
   conversations: ConversationDto[] = [];
   profile: Profile[] = [];
-  highlightChatBox = false;
-  highlightedIndex = NaN;
+  @Input() highlightChatBox: boolean;
+  @Input() highlightedIndex: number;
   @ViewChild('messageBox') elementRef: ElementRef;
 
+  @Input() newConversation;
   newMessage: String = '';
   username = '';
   displayName = '';
@@ -37,12 +36,23 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private chatService: ChatService,
-    private datePipe: DatePipe,
     private messageService: MessageService,
     private webSocketService: WebSocketService,
-    private searchService: SearchService
+    private datePipe: DatePipe
   ) {
     this.username = localStorage.getItem('username');
+  }
+
+  handleHighlightChatBoxChange(value: boolean): void {
+    this.highlightChatBox = value;
+  }
+
+  handleHighlightIndexChange(value: number): void {
+    this.highlightedIndex = value;
+  }
+
+  handleNewConversation(newConv: ConversationDto) {
+    this.newConversation = newConv;
   }
 
   ngOnInit() {
@@ -53,41 +63,26 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.scrollToBottom();
   }
 
-  // loadConversations() {
-  //   this.chatService.getConversations().subscribe(
-  //     (conversations: ConversationDto[]) => {
-  //       this.conversations = conversations;
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching conversations:', error);
-  //     }
-  //   );
-
-  //   this.webSocketService.getMessages().subscribe((message: any) => {
-  //     message = JSON.parse(message);
-  //     message.self = message.senderUsername === this.username;
-  //     this.conversations[this.highlightedIndex]?.messages.push(message);
-  //   });
-  // }
-
   loadConversations() {
     if (this.searchText.trim() === '') {
       this.chatService.getConversations().subscribe(
         (conversations: ConversationDto[]) => {
-          this.conversations = conversations;
+          this.conversations = conversations.filter(
+            (conv) => conv.messages && conv.messages.length > 0
+          );
         },
         (error) => {
           console.error('Error fetching conversations:', error);
         }
       );
-
     } else {
       this.chatService.getConversations().subscribe(
         (conversations: ConversationDto[]) => {
-          this.conversations = conversations.filter((conversation) =>
-            conversation.name
-              .toLowerCase()
-              .includes(this.searchText.toLowerCase())
+          this.conversations = conversations.filter(
+            (conv) =>
+              conv.name.toLowerCase().includes(this.searchText.toLowerCase()) &&
+              conv.messages &&
+              conv.messages.length > 0
           );
         },
         (error) => {
@@ -98,14 +93,22 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     this.webSocketService.getMessages().subscribe((message: any) => {
       message = JSON.parse(message);
-      message.self = message.senderUsername === this.username;
-      this.conversations[this.highlightedIndex]?.messages.push(message);
+      const targetConversation = this.conversations.find(
+        (conversation) => conversation.id === message.conversationId
+      );
+
+      if (targetConversation) {
+        targetConversation.messages.push(message);
+        console.log('Message aa gya');
+      } else {
+        console.error('Conversation not found');
+      }
     });
   }
 
   onSearchTextEntered(searchValue: string) {
     this.searchText = searchValue;
-    this.highlightedIndex = NaN; // Reset highlightedIndex when search text changes
+    this.highlightedIndex = NaN;
     this.loadConversations();
   }
 
@@ -114,33 +117,66 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.highlightedIndex = index;
   }
 
-  getLatestMessageTime(messages: any[]): string {
-    if (messages && messages.length > 0) {
+  getLatestMessageTime(messages: any[]) {
+    if (messages.length > 0) {
       const latestMessage = messages[messages.length - 1];
-      return this.datePipe.transform(latestMessage.timestamp, 'hh:mm a');
+      return this.datePipe.transform(latestMessage.sentAt, 'hh:mm a');
+    }
+    return false;
+  }
+
+  getLatestMessage(messages: any[]) {
+    if (messages.length > 0) {
+      const latestMessage = messages[messages.length - 1];
+      return latestMessage.message;
     }
     return 'No messages';
   }
 
-  getLatestMessage(messages: any[]) {
-    if (messages && messages.length > 0) {
-      const latestMessage = messages[messages.length - 1];
-      return latestMessage.message;
+  idSelect(): number {
+    if (
+      this.conversations[this.highlightedIndex] &&
+      this.conversations[this.highlightedIndex]?.id
+    ) {
+      console.log('inside id select');
+
+      return this.conversations[this.highlightedIndex]?.id;
+    } else {
+      return this.newConversation?.id;
     }
   }
 
   sendMessage() {
+    console.log('inside send message');
+
     if (this.newMessage.trim() !== '') {
       this.messageService
-        .sendMessage(
-          this.newMessage,
-          this.conversations[this.highlightedIndex]?.id,
-          this.displayName
-        )
+        .sendMessage(this.newMessage, this.idSelect(), this.displayName)
         .subscribe(
           (response) => {
             console.log('Message sent successfully:', response);
             this.newMessage = '';
+
+            this.chatService.getConversations().subscribe(
+              (conversations: ConversationDto[]) => {
+                this.conversations = conversations.filter(
+                  (conv) => conv.messages && conv.messages.length > 0
+                );
+
+                const isNewConversation = this.newConversation !== undefined;
+                if (isNewConversation) {
+                  this.highlightedIndex = this.conversations.length - 1;
+                } else {
+                  this.conversations.findIndex(
+                    (conv) => conv.id === this.idSelect()
+                  );
+                }
+                console.log('Updated highlightedIndex:', this.highlightedIndex);
+              },
+              (error) => {
+                console.error('Error fetching conversations:', error);
+              }
+            );
           },
           (error) => {
             console.error('Error sending message:', error);
@@ -150,18 +186,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.newMessage = '';
     }
   }
-
-  // updateConversation(message: any) {
-  //   const convToUpdate = this.conversations[this.highlightedIndex];
-  //   if (convToUpdate === message.conversationId) {
-  //     convToUpdate.messages.push({
-  //       message: message.message,
-  //       timestamp: message.timestamp,
-  //     });
-  //   }
-  //   this.highlightedIndex = this.conversations.indexOf(convToUpdate);
-  //   this.scrollToBottom();
-  // }
 
   scrollToBottom() {
     this.elementRef.nativeElement.scrollTop =

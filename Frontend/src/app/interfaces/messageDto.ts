@@ -6,4 +6,6 @@ export interface MessageDto{
 
   conversationId : number;
 
+  seen: boolean;
+
 }

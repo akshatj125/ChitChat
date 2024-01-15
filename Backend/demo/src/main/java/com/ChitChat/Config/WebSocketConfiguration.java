@@ -22,5 +22,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes("/app");
         registry.enableSimpleBroker("/topic");
+        //Messages sent from the client start with "/app" to indicate their destination on the server side.
+        //Messages broadcasted from the server to clients are sent to topics starting with "/topic".
     }
 }

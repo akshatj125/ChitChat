@@ -38,10 +38,10 @@ export class LoginComponent {
       var url=localStorage.getItem("redirectUrl")
         if(url==null)
         {
-          url="/home"
+          url="/chat"
         }
         localStorage.removeItem("redirectUrl")
-        this.router.navigate(['/home']);
+        this.router.navigate(['/chat']);
       
       },
       error=>{

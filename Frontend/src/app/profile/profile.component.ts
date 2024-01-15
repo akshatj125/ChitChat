@@ -1,6 +1,6 @@
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './Service/user.service';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-profile',

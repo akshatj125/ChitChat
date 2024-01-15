@@ -10,22 +10,25 @@
       />
     </a>
   </div>
+  <div class="search-box" *ngIf="isLoggedIn()">
+    <app-user-search [highlightChatBox]="highlightChatBox" [highlightedIndex]="highlightedIndex" (highlightChatBoxChange)="handleHighlightChatBoxChange($event)" (highlightedIndexChange)="handleHighlightIndexChange($event)" (newConversationCreated)="handleNewConversation($event)"></app-user-search>
+  </div>
 
   <div class="rightElements">
-<div *ngIf="!isLoggedIn()">
-  <button
-  id="loginButton"
-  class="btn bg-dark-subtle pt-2 pb-2 ps-3 pe-3 mx-4 rounded-2"
->
-  <a
-    class="text-decoration-none text-black pt-2 pb-2 ps-3 pe-3 fw-bold"
-    routerLink="/login"
-    routerLinkActive="active"
-  >
-    Login
-  </a>
-</button>
-</div>
+    <div *ngIf="!isLoggedIn()">
+      <button
+        id="loginButton"
+        class="btn bg-dark-subtle pt-2 pb-2 ps-3 pe-3 mx-4 rounded-2"
+      >
+        <a
+          class="text-decoration-none text-black pt-2 pb-2 ps-3 pe-3 fw-bold"
+          routerLink="/login"
+          routerLinkActive="active"
+        >
+          Login
+        </a>
+      </button>
+    </div>
 
     <div class="dropdown" *ngIf="isLoggedIn()">
       <button

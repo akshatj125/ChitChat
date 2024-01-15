@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class ConversationServiceImpl implements ConversationService {
 
     private final ConversationRepository conversationRepository;
-
+    private final UserRepository userRepository;
     @Override
     public Conversations saveConversations(Conversations conversations) {
         return conversationRepository.save(conversations);
@@ -31,6 +31,20 @@ public class ConversationServiceImpl implements ConversationService {
     @Override
     public List<Conversations> findAllConversation() {
         return conversationRepository.findAll();
+    }
+
+    @Override
+    public Conversations saveConversationWithUsers(Users user1, Users user2,String conversationName) {
+        Conversations newConversation = new Conversations();
+        newConversation.setUsers(List.of(user1, user2));
+        newConversation.setName(conversationName);
+
+        newConversation= conversationRepository.save(newConversation);
+        user1.getConversations().add(newConversation);
+        user2.getConversations().add(newConversation);
+        userRepository.save(user1);
+        userRepository.save(user2);
+        return newConversation;
     }
 
 }

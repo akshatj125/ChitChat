@@ -61,6 +61,7 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<List<UserDetailDto>> showUser() {
         List<Users> users = userService.findAll();
+        System.out.println(users);
         return new ResponseEntity<>(UserDetailMapper.mapToUserDto(users), HttpStatus.OK);
     }
 
@@ -90,6 +91,17 @@ public class UserController {
             List<ConversationDto> conversations = userService.conversationsPerUser(authentication);
             System.out.println(conversations);
             return ResponseEntity.ok(conversations);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<UserDetailDto>> searchUsers(@RequestParam String query) {
+        try {
+            List<UserDetailDto> searchResults = userService.searchUsers(query);
+            return ResponseEntity.ok(searchResults);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

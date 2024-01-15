@@ -1,4 +1,5 @@
 .left-side {
+  position: relative;
   max-width: 22rem;
   min-height: 100vh;
   border-right: 2px solid #000;
@@ -26,6 +27,7 @@
   background-color: #89c6e0;
   cursor: pointer;
 }
+
 .active {
   background-color: #34b7f1 !important;
 }
@@ -85,6 +87,10 @@
 .msg-content {
   margin-left: 10px;
   font-size: large;
+}
+
+.bold-message{
+  font-weight: bolder;
 }
 
 .msg-username {

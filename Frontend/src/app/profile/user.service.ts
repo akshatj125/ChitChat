@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { Conditional } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +22,18 @@ export class UserService {
 
     return this.http.get(url, { headers });
   }
+
+  searchUsers(query: string): Observable<any> {
+    const url = `http://localhost:8080/users/search?query=${query}`;
+    // console.log(url)
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.token}`,
+    });
+
+    return this.http.get(url, { headers });
+  }
+
 }
 

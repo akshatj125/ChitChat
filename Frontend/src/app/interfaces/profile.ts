@@ -1,6 +1,6 @@
 export interface Profile{
-    username : String;
-    email: String;
+    username : string;
+    email: string;
     created_at : number;
     profilepicture : String;
 }

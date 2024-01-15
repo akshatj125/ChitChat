@@ -37,12 +37,16 @@ public class Messages {
     @Column(name = "timestamp")
     private Date timestamp;
 
+    @Column(name = "seen")
+    private boolean seen;
+
     @Override
     public String toString() {
         return "Messages{" +
                 "id=" + id +
                 ", message='" + message + '\'' +
                 ", timestamp=" + timestamp +
+                ", seen=" + seen +
                 '}';
     }
 }

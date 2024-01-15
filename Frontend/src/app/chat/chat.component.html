@@ -1,25 +1,40 @@
+<app-header
+  [highlightChatBox]="highlightChatBox"
+  [highlightedIndex]="highlightedIndex"
+  (highlightChatBoxChange)="handleHighlightChatBoxChange($event)"
+  (highlightedIndexChange)="handleHighlightIndexChange($event)"
+  (newConversationCreated)="handleNewConversation($event)"
+  class="fixed-top"
+></app-header>
 <div class="main-container">
   <aside class="left-side">
     <app-search (searchValueChanged)="onSearchTextEntered($event)"></app-search>
-
     <div class="body-container">
       <div class="chat-list">
         <div
           *ngFor="let conversation of conversations; let i = index"
           class="chat-box"
-          
           [class.active]="i === highlightedIndex"
           (click)="chatBoxClicked(i)"
         >
           <div class="chat-details">
             <div class="chat-title">
               <h4>{{ conversation.name }}</h4>
-              <span class="chat-time">{{
-                getLatestMessageTime(conversation.messages)
-              }}</span>
+              <span
+                class="chat-time"
+                *ngIf="getLatestMessageTime(conversation.messages)"
+                >{{ getLatestMessageTime(conversation.messages) }}</span
+              >
             </div>
-            <div class="chat-msg">
-              <p>{{ getLatestMessage(conversation.messages) }}</p>
+            <div
+              class="chat-msg"
+              [class.bold-message]="
+                getLatestMessage(conversation.messages)?.status
+              "
+            >
+              <p>
+                {{ getLatestMessage(conversation.messages) }}
+              </p>
             </div>
           </div>
         </div>
@@ -34,6 +49,7 @@
           <h5 class="content-chat-title">
             {{
               conversations[highlightedIndex]?.name ||
+                newConversation?.name ||
                 "No conversation selected"
             }}
           </h5>
@@ -44,7 +60,7 @@
           class="message-container"
           *ngFor="let msg of conversations[highlightedIndex]?.messages"
         >
-          <p class="msg-username" >{{ msg.senderUsername }}</p>
+          <p class="msg-username">{{ msg.senderUsername }}</p>
           <p class="msg-content">{{ msg.message }}</p>
           <p class="msg-time text-muted">
             {{ msg.sentAt | date : "shortTime" }}
@@ -68,3 +84,4 @@
     </div>
   </section>
 </div>
+<app-footer></app-footer>

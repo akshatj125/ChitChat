@@ -41,7 +41,6 @@ public class MessageServiceImpl implements MessageService {
     public void sendMessage(MessageDto messageDto, Authentication authentication){
         Users user = (Users) authentication.getPrincipal();
         int conversationId = messageDto.getConversationId();
-        String senderUsername = messageDto.getSenderUsername();
         Users myUser= userRepository.findByUsername(user.getUsername()).orElseThrow(
                 ()->new AppException("Could not find user", HttpStatus.NOT_FOUND)
         );
@@ -53,9 +52,13 @@ public class MessageServiceImpl implements MessageService {
         Messages sentMessage= messageRepository.save(newMessage);
 
         for (Users users : conversation.getUsers()){
-            System.out.println(users.getUsername());
             webSocketService.sendMessage("chat/"+users.getUsername(), MessageMapper.mapToMessageDto(sentMessage));
         }
 
+    }
+
+    @Override
+    public void updateStatus(MessageDto message, boolean status) {
+        messageRepository.updateStatus(message.getMessageId(), status);
     }
 }

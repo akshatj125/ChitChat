@@ -11,6 +11,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class MessageDto {
 
+    private int messageId;
+
     private String message;
 
     private int conversationId;
@@ -18,4 +20,6 @@ public class MessageDto {
     private String senderUsername;
 
     private Date sentAt;
+
+    private boolean seen;
 }

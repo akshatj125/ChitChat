@@ -31,7 +31,6 @@ public class Conversations {
 
     @OneToMany(mappedBy = "conversation", fetch = FetchType.EAGER)
     @JsonIgnore
-//    @JsonManagedReference
     private List<Messages> messages;
 
     @CreationTimestamp

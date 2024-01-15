@@ -15,4 +15,6 @@ public interface MessageService {
     List<Messages> findAllMessage();
 
     void sendMessage(MessageDto messageDto, Authentication authentication);
+
+    void updateStatus(MessageDto message, boolean status);
 }

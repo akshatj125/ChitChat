@@ -1,5 +1,6 @@
 package com.ChitChat.ReceivedMessages;
 
+import com.ChitChat.DTO.MessageDto.MessageDto;
 import com.ChitChat.Messages.Messages;
 import com.ChitChat.Users.Users;
 import jakarta.persistence.*;

@@ -25,4 +25,6 @@ public interface UserService {
 
     List<ConversationDto> conversationsPerUser(Authentication authentication);
 
+    List<UserDetailDto> searchUsers(String query);
+
 }
