@@ -52,7 +52,6 @@ public class Users {
     @JoinTable(name = "user_conversations",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "conversation_id"))
-//    @JsonBackReference
     private List<Conversations> conversations;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)

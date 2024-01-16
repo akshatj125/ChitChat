@@ -9,13 +9,17 @@ import com.ChitChat.DTO.LoginDto.LoginMapper;
 import com.ChitChat.DTO.SignupDto.SignupDto;
 import com.ChitChat.DTO.UserDetailDto.UserDetailDto;
 import com.ChitChat.DTO.UserDetailDto.UserDetailMapper;
+import com.ChitChat.exceptions.AppException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +27,7 @@ import java.util.Optional;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 @CrossOrigin("http://localhost:4200")
+
 public class UserController {
 
     private final UserService userService;
@@ -107,4 +112,46 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @PostMapping("/profile_picture")
+    public ResponseEntity<String> updateProfilePicture(
+            Authentication authentication,
+            @RequestParam("profilePicture") MultipartFile profilePicture) {
+        try {
+            String profilePictureId = userService.updateProfilePicture(authentication, profilePicture);
+            return new ResponseEntity<>(profilePictureId, HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/profile_picture")
+    public ResponseEntity<byte[]> getProfilePicture(Authentication authentication) {
+        Users user = (Users) authentication.getPrincipal();
+        String profilePictureId = user.getProfilepicture();
+
+        if (profilePictureId != null) {
+            byte[] profilePicture = userService.getProfilePicture(profilePictureId);
+            if (profilePicture != null) {
+                return new ResponseEntity<>(profilePicture, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+//    @GetMapping("/profile_picture")
+//    public ResponseEntity<byte[]> getProfilePicture(Authentication authentication) {
+//        byte[] profilePicture = userService.getProfilePicture(authentication);
+//        if (profilePicture != null) {
+//            return new ResponseEntity<>(profilePicture, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+
 }

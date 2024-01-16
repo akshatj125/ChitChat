@@ -6,13 +6,17 @@ import com.ChitChat.DTO.ConversationDto.ConversationDto;
 import com.ChitChat.DTO.ConversationDto.ConversationMapper;
 import com.ChitChat.DTO.UserDetailDto.UserDetailDto;
 import com.ChitChat.DTO.UserDetailDto.UserDetailMapper;
+import com.ChitChat.ProfilePicture.GridFsService;
 import com.ChitChat.exceptions.AppException;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,6 +27,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ConversationRepository conversationRepository;
+    private final GridFsService gridFsService;
 
     @Override
     public Users save(Users user) {
@@ -73,4 +78,35 @@ public class UserServiceImpl implements UserService {
                 .map(UserDetailMapper::mapToUserDto)
                 .collect(Collectors.toList());
     }
+
+    public String updateProfilePicture(Authentication authentication, MultipartFile profilePicture) throws IOException {
+        Users user = (Users) authentication.getPrincipal();
+
+        String profilePictureId = gridFsService.storeProfilePicture(profilePicture);
+
+        user.setProfilepicture(profilePictureId);
+
+        userRepository.save(user);
+
+        return profilePictureId;
+    }
+
+    public byte[] getProfilePicture(String profilePictureId) {
+        if (profilePictureId != null) {
+            return gridFsService.getProfilePicture(profilePictureId);
+        }
+        return null;
+    }
+
+
+//    public byte[] getProfilePicture(Authentication authentication) {
+//        Users user = (Users) authentication.getPrincipal();
+//
+//        String profilePictureId = user.getProfilepicture();
+//        if (profilePictureId != null) {
+//            return gridFsService.getProfilePicture(profilePictureId);
+//        }
+//
+//        return null;
+//    }
 }
