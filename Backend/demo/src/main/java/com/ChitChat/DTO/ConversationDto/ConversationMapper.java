@@ -14,8 +14,8 @@ public class ConversationMapper {
 
         String name = conversation.getName();
         if (conversation.getUsers().size() == 2){
-            Users user2 = conversation.getUsers().stream().filter((user1) -> {
-                return !user1.getUsername().equals(username);
+            Users user2 = conversation.getUsers().stream().filter((user) -> {
+                return !user.getUsername().equals(username);
             }).findFirst().orElseThrow();
             name=user2.getUsername();
             System.out.println(name);

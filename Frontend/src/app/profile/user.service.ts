@@ -14,20 +14,12 @@ export class UserService {
   }
 
   getUserData(): Observable<any> {
-    const url="http://localhost:8080/users/profile"
+    const url = 'http://localhost:8080/users/profile';
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`,
+      Authorization: `Bearer ${this.token}`,
     });
 
     return this.http.get(url, { headers });
-  }
-
-  getProfilePicture(): Observable<any>{
-    const url = "http://localhost:8080/users/profile_picture"
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`,
-    });
-    return this.http.get(url, { headers, responseType: 'blob' });
   }
 
   searchUsers(query: string): Observable<any> {
@@ -36,7 +28,7 @@ export class UserService {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.token}`,
+      Authorization: `Bearer ${this.token}`,
     });
 
     return this.http.get(url, { headers });
@@ -48,12 +40,17 @@ export class UserService {
     formData.append('profilePicture', file, file.name);
 
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`,
+      Authorization: `Bearer ${this.token}`,
     });
 
     return this.http.post(url, formData, { headers, responseType: 'text' });
-
   }
 
+  getProfilePicture(): Observable<any> {
+    const url = 'http://localhost:8080/users/profile_picture';
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    return this.http.get(url, { headers, responseType: 'blob' });
+  }
 }
-

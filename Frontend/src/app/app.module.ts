@@ -8,13 +8,14 @@ import { SignupComponent } from './signup/signup.component';
 import { ProfileComponent } from './profile/profile.component';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { ChatComponent } from './chat/chat.component';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 import { DatePipe } from '@angular/common';
 import { SearchComponent } from './search/search.component';
 import { UserSearchComponent } from './user-search/user-search.component';
+import { HttpCustomInterceptor } from './http-interceptor.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +36,7 @@ import { UserSearchComponent } from './user-search/user-search.component';
     HttpClientModule
   ],
   providers: [
-    DatePipe
+    DatePipe, {provide : HTTP_INTERCEPTORS, useClass : HttpCustomInterceptor, multi : true}
   ],
   bootstrap: [AppComponent]
 })

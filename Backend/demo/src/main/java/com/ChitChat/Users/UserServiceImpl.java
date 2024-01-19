@@ -98,15 +98,4 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-
-//    public byte[] getProfilePicture(Authentication authentication) {
-//        Users user = (Users) authentication.getPrincipal();
-//
-//        String profilePictureId = user.getProfilepicture();
-//        if (profilePictureId != null) {
-//            return gridFsService.getProfilePicture(profilePictureId);
-//        }
-//
-//        return null;
-//    }
 }

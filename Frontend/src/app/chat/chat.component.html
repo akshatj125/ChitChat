@@ -76,6 +76,8 @@
             type="text"
             placeholder="Type message"
           />
+          <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)">
+          <button (click)="fileInput.click()" style="border-right: 2px solid black;"><i class="fas fa-paperclip"></i></button>
           <button (click)="sendMessage()" style="border: none">
             <i class="fa fa-send-o"></i>
           </button>

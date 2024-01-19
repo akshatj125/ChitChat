@@ -7,6 +7,7 @@ import com.ChitChat.Messages.Messages;
 import com.ChitChat.Users.UserRepository;
 import com.ChitChat.Users.Users;
 import com.ChitChat.exceptions.AppException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;

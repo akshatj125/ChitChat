@@ -11,7 +11,13 @@
     </a>
   </div>
   <div class="search-box" *ngIf="isLoggedIn()">
-    <app-user-search [highlightChatBox]="highlightChatBox" [highlightedIndex]="highlightedIndex" (highlightChatBoxChange)="handleHighlightChatBoxChange($event)" (highlightedIndexChange)="handleHighlightIndexChange($event)" (newConversationCreated)="handleNewConversation($event)"></app-user-search>
+    <app-user-search
+      [highlightChatBox]="highlightChatBox"
+      [highlightedIndex]="highlightedIndex"
+      (highlightChatBoxChange)="handleHighlightChatBoxChange($event)"
+      (highlightedIndexChange)="handleHighlightIndexChange($event)"
+      (newConversationCreated)="handleNewConversation($event)"
+    ></app-user-search>
   </div>
 
   <div class="rightElements">
@@ -40,7 +46,8 @@
       >
         <img
           class="icon bg-dark-subtle rounded-circle"
-          src="../assets/icons/person-circle.svg"
+          *ngIf="profileImageUrl"
+          [src]="profileImageUrl"
           alt="profile icon"
           height="30px"
           width="30px"

@@ -1,10 +1,12 @@
+<app-header></app-header>
+
 <body>
   <div class="profile-container">
     <div class="card shadow">
       <label for="profilePicture" class="profile-picture">
         <img
-          *ngIf="profileImageUrl"
-          [src]="profileImageUrl"
+          *ngIf="profileImageUrl || userdata.username"
+          [src]="profileImageUrl || 'https://bootstrapious.com/i/snippets/sn-chat/avatar.svg'"
           alt="Avatar"
         />
         <input
@@ -19,8 +21,9 @@
         <button class="update-profile-btn" (click)="updateProfilePicture()">Update Profile Picture</button>
         <h2 class="username">{{ userdata.username }}</h2>
         <p class="email">{{ userdata.email }}</p>
-        
       </div>
     </div>
   </div>
 </body>
+
+<app-footer></app-footer>

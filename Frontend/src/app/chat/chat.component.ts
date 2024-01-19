@@ -13,6 +13,7 @@ import { MessageService } from './message.service';
 import { WebSocketService } from './web-socket.service';
 import { Profile } from '../interfaces/profile';
 import { DatePipe } from '@angular/common';
+import { FileUploadService } from './file-upload.service';
 
 @Component({
   selector: 'app-chat',
@@ -23,8 +24,8 @@ import { DatePipe } from '@angular/common';
 export class ChatComponent implements OnInit, AfterViewChecked {
   conversations: ConversationDto[] = [];
   profile: Profile[] = [];
-  @Input() highlightChatBox: boolean;
-  @Input() highlightedIndex: number;
+  highlightChatBox: boolean;
+  highlightedIndex: number;
   @ViewChild('messageBox') elementRef: ElementRef;
 
   @Input() newConversation;
@@ -33,12 +34,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   displayName = '';
   rightBox: Boolean = false;
   searchText: string = '';
+  @Input() profileImageUrl: any = null;
 
   constructor(
     private chatService: ChatService,
     private messageService: MessageService,
     private webSocketService: WebSocketService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private fileUploadService: FileUploadService
   ) {
     this.username = localStorage.getItem('username');
   }
@@ -146,8 +149,25 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.sendFile(file);
+  }
+
+  sendFile(file: File) {
+    if (file) {
+      this.fileUploadService.uploadFile(file).subscribe(
+        (res) => {
+          console.log('File uploaded successfully:', res);
+        },
+        (error) => {
+          console.log('File not uploaded:', error);
+        }
+      );
+    }
+  }
+  
   sendMessage() {
-    console.log('inside send message');
 
     if (this.newMessage.trim() !== '') {
       this.messageService

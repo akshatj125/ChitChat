@@ -143,15 +143,4 @@ public class UserController {
         }
     }
 
-
-//    @GetMapping("/profile_picture")
-//    public ResponseEntity<byte[]> getProfilePicture(Authentication authentication) {
-//        byte[] profilePicture = userService.getProfilePicture(authentication);
-//        if (profilePicture != null) {
-//            return new ResponseEntity<>(profilePicture, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
-
 }

@@ -6,7 +6,6 @@ import java.util.List;
 
 public class UserDetailMapper {
 
-    // Convert User JPA Entity into UserDto
     public static UserDetailDto mapToUserDto(Users user){
         return new UserDetailDto(
                 user.getUsername(),

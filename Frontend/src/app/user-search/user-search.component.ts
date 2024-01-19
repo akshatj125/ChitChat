@@ -4,7 +4,6 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
-  filter,
   switchMap,
 } from 'rxjs';
 import { UserService } from '../profile/user.service';
@@ -83,7 +82,7 @@ export class UserSearchComponent {
             this.highlightChatBox = true;
             this.highlightChatBoxChange.emit(this.highlightChatBox);
             this.highlightedIndexChange.emit(this.highlightedIndex);
-            this.newConversationCreated.emit(newConversation);
+            this.newConversationCreated.emit(newConversation); 
           });
       },
       (error) => {

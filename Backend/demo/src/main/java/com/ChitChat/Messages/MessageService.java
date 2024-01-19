@@ -17,4 +17,5 @@ public interface MessageService {
     void sendMessage(MessageDto messageDto, Authentication authentication);
 
     void updateStatus(MessageDto message, boolean status);
+
 }
