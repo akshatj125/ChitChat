@@ -28,10 +28,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   highlightedIndex: number;
   @ViewChild('messageBox') elementRef: ElementRef;
 
-  @Input() newConversation;
+  newConversation;
   newMessage: String = '';
   username = '';
-  displayName = '';
   rightBox: Boolean = false;
   searchText: string = '';
   @Input() profileImageUrl: any = null;
@@ -166,12 +165,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       );
     }
   }
-  
-  sendMessage() {
 
+  sendMessage() {
     if (this.newMessage.trim() !== '') {
       this.messageService
-        .sendMessage(this.newMessage, this.idSelect(), this.displayName)
+        .sendMessage(this.newMessage, this.idSelect(), this.username)
         .subscribe(
           (response) => {
             console.log('Message sent successfully:', response);

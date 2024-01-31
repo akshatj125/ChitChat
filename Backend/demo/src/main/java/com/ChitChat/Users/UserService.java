@@ -23,10 +23,6 @@ public interface UserService {
 
     Optional<Users> findByUsername(String username);
 
-    Users addUserToConversation(int conversationId, Authentication authentication);
-
-    void removeUser(int userId);
-
     List<ConversationDto> conversationsPerUser(Authentication authentication);
 
     List<UserDetailDto> searchUsers(String query);

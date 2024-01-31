@@ -57,8 +57,8 @@ public class MessageServiceImpl implements MessageService {
 
     }
 
-    @Override
-    public void updateStatus(MessageDto message, boolean status) {
-        messageRepository.updateStatus(message.getMessageId(), status);
-    }
+//    @Override
+//    public void updateStatus(MessageDto message, boolean status) {
+//        messageRepository.updateStatus(message.getMessageId(), status);
+//    }
 }

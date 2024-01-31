@@ -28,15 +28,15 @@ export class MessageService {
     return this.http.post(endpoint, payload, { headers, responseType: 'text' });
   }
 
-  updateStatus(messageId: number, status: boolean): Observable<any> {
-    const url = `http://localhost:8080/update?status=${status}`;
+  // updateStatus(messageId: number, status: boolean): Observable<any> {
+  //   const url = `http://localhost:8080/update?status=${status}`;
     
-    const body = { messageId: messageId };
-    const headers = new HttpHeaders().set(
-      'Authorization',
-      'Bearer ' + localStorage.getItem('token')
-    );
+  //   const body = { messageId: messageId };
+  //   const headers = new HttpHeaders().set(
+  //     'Authorization',
+  //     'Bearer ' + localStorage.getItem('token')
+  //   );
 
-    return this.http.put(url, body, { headers, responseType: 'text' })
-  }
+  //   return this.http.put(url, body, { headers, responseType: 'text' })
+  // }
 }

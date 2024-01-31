@@ -77,19 +77,6 @@ public class UserController {
         return new ResponseEntity<>(UserDetailMapper.mapToUserDto(user), HttpStatus.OK);
     }
 
-    @PostMapping("/conversation/{conversationId}")
-    @Transactional
-    public ResponseEntity<UserDetailDto> addUserToConversation (@PathVariable int conversationId, Authentication authentication)
-    {
-        Users user = (Users)authentication.getPrincipal();
-        Users user1 = userService.addUserToConversation(conversationId, authentication);
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        UserDetailDto userDTO = UserDetailMapper.mapToUserDto(user);
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
-    }
-
     @GetMapping("/conversations")
     public ResponseEntity<List<ConversationDto>> getConversationsForCurrentUser(Authentication authentication) {
         try {

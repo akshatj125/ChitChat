@@ -10,7 +10,7 @@ export class WebSocketService {
   username = '';
 
   receivedMessages = new Subject();
-  fileUploaded = new Subject();
+  // fileUploaded = new Subject();
 
   constructor() {
     this.username = localStorage.getItem('username');

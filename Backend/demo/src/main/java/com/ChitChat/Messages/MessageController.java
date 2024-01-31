@@ -46,15 +46,15 @@ public class MessageController {
         }
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<MessageDto> updateSeenStatus(@RequestBody MessageDto message, @RequestParam boolean status){
-        try{
-            messageService.updateStatus(message,status);
-            return ResponseEntity.ok(message);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
-        }
-    }
+//    @PutMapping("/update")
+//    public ResponseEntity<MessageDto> updateSeenStatus(@RequestBody MessageDto message, @RequestParam boolean status){
+//        try{
+//            messageService.updateStatus(message,status);
+//            return ResponseEntity.ok(message);
+//        }
+//        catch(Exception e){
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
+//        }
+//    }
 }
